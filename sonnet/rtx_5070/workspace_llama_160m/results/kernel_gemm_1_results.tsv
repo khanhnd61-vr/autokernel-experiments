@@ -1,0 +1,8 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	kept	gemm	39.1340			1.000	PASS		baseline: 64x64x32 tiles fp32 acc allow_tf32=False; FAIL deep_k/fp32-tight-tol known Blackwell-vs-cuBLAS; primary shapes PASS; 68.7% peak
+2	kept	gemm	39.6290			1.013	PASS		128x128 tiles + num_stages=4: +1.3% over 64x64 baseline; 69.6% peak compute
+3	revert	gemm	36.6770			1.013	PASS		num_stages 4->3: -7.5% regression; stages=4 has better pipeline depth for this tile size
+4	revert	gemm	39.6540			1.013	PASS		L2 swizzle GROUP_M=8: +0.06% flat noise; more complex code REVERT
+5	revert	gemm	39.0390			1.013	PASS		num_warps=8: -1.5% regression; default 4 warps better for 128x128 on Blackwell
+6	revert	gemm	37.1630			1.013	PASS		num_stages 4->5: -6.2% regression; SMEM overflow with 128x128 tiles
+7	revert	gemm	31.2070			1.013	PASS		autotune 8 configs: tuning overhead causes -21% regression; autotuner picks same 128x128x32+s4 config anyway

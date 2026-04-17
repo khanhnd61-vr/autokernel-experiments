@@ -1,0 +1,33 @@
+{
+  "num_devices": 1,
+  "devices": [
+    {
+      "index": 0,
+      "name": "NVIDIA H100 80GB HBM3",
+      "memory_clock_rate_mhz": 2557,
+      "peak_bandwidth_gb_s": 3352.3,
+      "concurrent_kernels": true,
+      "device_overlap": true,
+      "compute_capability": [9, 0],
+      "architecture": "Hopper",
+      "tensor_cores": true,
+      "sm_clock_rate_mhz": 1980,
+      "peak_tflops_fp16": 1070.53,
+      "peak_tflops_bf16": 1070.53,
+      "peak_tflops_fp32": 66.91,
+      "warp_size": 32,
+      "sm_count": 132,
+      "max_threads_per_sm": 2048,
+      "max_threads_per_block": 1024,
+      "max_blocks_per_sm": 32,
+      "max_grid_size": [2147483647, 65535, 65535],
+      "max_threads_dim": [1024, 1024, 64],
+      "memory_gb": 79.1,
+      "shared_memory_per_block_bytes": 49152,
+      "shared_memory_per_sm_bytes": 233472,
+      "l2_cache_mb": 50.0,
+      "regs_per_block": 65536,
+      "regs_per_sm": 65536
+    }
+  ]
+}

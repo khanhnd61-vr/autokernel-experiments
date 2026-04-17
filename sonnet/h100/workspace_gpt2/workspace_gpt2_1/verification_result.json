@@ -1,0 +1,41 @@
+{
+  "model": "GPT2",
+  "input_shape": "1,1024",
+  "dtype": "float16",
+  "gpu": "NVIDIA H100 80GB HBM3",
+  "reference": {
+    "output_shape": "[1, 1024, 50257]",
+    "latency_ms": 3.98
+  },
+  "optimized": {
+    "output_shape": "[1, 1024, 50257]",
+    "latency_ms": 5.58,
+    "kernels_replaced": [
+      {
+        "type": "matmul",
+        "rank": 1,
+        "speedup": 1.935,
+        "path": "/mnt/data/sftp/data/hunght23/workspace/projects/autokernel/workspace/kernel_matmul_1_optimized.py"
+      },
+      {
+        "type": "layernorm",
+        "rank": 17,
+        "speedup": 1.283,
+        "path": "/mnt/data/sftp/data/hunght23/workspace/projects/autokernel/workspace/kernel_layernorm_17_optimized.py"
+      }
+    ]
+  },
+  "verification": {
+    "correctness": "PASS",
+    "max_abs_error": 0.00390625,
+    "mean_abs_error": 0.0004876535094808787,
+    "has_nan": false,
+    "has_inf": false
+  },
+  "summary": {
+    "original_latency_ms": 3.98,
+    "optimized_latency_ms": 5.58,
+    "end_to_end_speedup": 0.712,
+    "kernels_replaced": 2
+  }
+}

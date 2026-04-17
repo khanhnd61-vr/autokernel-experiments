@@ -1,0 +1,7 @@
+experiment	 tag   	 kernel_type	 throughput_tflops	 latency_us	 pct_peak	 speedup_vs_pytorch	 correctness	 peak_vram_mb	 description
+         1	 kept  	 reduce     	            0.9270	           	         	              1.000	 PASS       	             	 baseline
+         2	 kept  	 reduce     	            1.1150	           	         	              1.203	 PASS       	             	 EVEN_N constexpr: +20.3%% 1.067x PyTorch
+         3	 revert	 reduce     	            1.1210	           	         	              1.203	 PASS       	             	 num_warps=8: noise +0.54%
+         4	 revert	 reduce     	            1.0920	           	         	              1.203	 PASS       	             	 num_warps=2: -2.1%
+         5	 revert	 reduce     	            1.1110	           	         	              1.203	 PASS       	             	 deferred fp32 cast: noise -0.4%
+         6	 revert	 reduce     	            1.1180	           	         	              1.203	 PASS       	             	 BLOCK_SIZE=4096: noise +0.27%

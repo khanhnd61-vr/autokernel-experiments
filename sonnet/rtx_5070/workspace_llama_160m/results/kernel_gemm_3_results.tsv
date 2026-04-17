@@ -1,0 +1,6 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	kept	gemm	31.8670			1.000	PASS		gemm3 baseline: 64x64x32 tiles; M=512 N=32000 K=768; 1.206x pytorch already
+2	kept	gemm	40.4310			1.269	PASS		gemm3 128x128+s4+swizzle+tf32+multiple_of: +26.9%; 71.0% peak 1.163x pytorch
+3	revert	gemm	39.8160			1.269	PASS		GROUP_M=8: -1.5% regression for N=32000
+4	revert	gemm	40.1310			1.269	PASS		num_warps=8 gemm3: -0.74% regression
+5	revert	gemm	34.5160			1.269	PASS		64x256 tiles: -14.6% regression for N=32000

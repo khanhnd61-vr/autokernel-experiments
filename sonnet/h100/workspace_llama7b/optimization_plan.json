@@ -1,0 +1,111 @@
+{
+    "kernels_to_optimize": [
+        {
+            "rank": 1,
+            "file": "workspace/kernel_flash_attention_1.py",
+            "op_type": "flash_attention",
+            "model_shape": {
+                "batch": 2,
+                "heads": 32,
+                "seq_len": 1024,
+                "head_dim": 64
+            },
+            "gpu_time_ms": 3.849,
+            "pct_total": 7.7,
+            "estimated_speedup_potential": "2-4x"
+        },
+        {
+            "rank": 2,
+            "file": "workspace/kernel_flash_attention_2.py",
+            "op_type": "flash_attention",
+            "model_shape": {
+                "batch": 2,
+                "heads": 32,
+                "seq_len": 1024,
+                "head_dim": 64
+            },
+            "gpu_time_ms": 3.738,
+            "pct_total": 7.5,
+            "estimated_speedup_potential": "2-4x"
+        },
+        {
+            "rank": 3,
+            "file": "workspace/kernel_matmul_3.py",
+            "op_type": "matmul",
+            "model_shape": {
+                "M": 2048,
+                "N": 2048,
+                "K": 2048
+            },
+            "gpu_time_ms": 3.082,
+            "pct_total": 6.2,
+            "estimated_speedup_potential": "2-3x"
+        },
+        {
+            "rank": 7,
+            "file": "workspace/kernel_matmul_7.py",
+            "op_type": "matmul",
+            "model_shape": {
+                "M": 2048,
+                "N": 2048,
+                "K": 2048
+            },
+            "gpu_time_ms": 1.639,
+            "pct_total": 3.3,
+            "estimated_speedup_potential": "2-3x"
+        },
+        {
+            "rank": 10,
+            "file": "workspace/kernel_matmul_10.py",
+            "op_type": "matmul",
+            "model_shape": {
+                "M": 2048,
+                "N": 2048,
+                "K": 2048
+            },
+            "gpu_time_ms": 1.541,
+            "pct_total": 3.1,
+            "estimated_speedup_potential": "2-3x"
+        },
+        {
+            "rank": 14,
+            "file": "workspace/kernel_matmul_14.py",
+            "op_type": "matmul",
+            "model_shape": {
+                "M": 2048,
+                "N": 2048,
+                "K": 2048
+            },
+            "gpu_time_ms": 1.42,
+            "pct_total": 2.8,
+            "estimated_speedup_potential": "2-3x"
+        },
+        {
+            "rank": 16,
+            "file": "workspace/kernel_matmul_16.py",
+            "op_type": "matmul",
+            "model_shape": {
+                "M": 2048,
+                "N": 2048,
+                "K": 2048
+            },
+            "gpu_time_ms": 1.139,
+            "pct_total": 2.3,
+            "estimated_speedup_potential": "2-3x"
+        },
+        {
+            "rank": 20,
+            "file": "workspace/kernel_reduce_20.py",
+            "op_type": "reduce",
+            "model_shape": {
+                "M": 4096,
+                "N": 4096
+            },
+            "gpu_time_ms": 1.031,
+            "pct_total": 2.1,
+            "estimated_speedup_potential": "1.5-2x"
+        }
+    ],
+    "total_optimization_targets": 8,
+    "covered_gpu_time_pct": 35.0
+}

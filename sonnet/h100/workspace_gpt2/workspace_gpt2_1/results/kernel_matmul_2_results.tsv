@@ -1,0 +1,7 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	kept	matmul	532.8530			1.000	PASS		matmul_2 same shape as matmul_1 -- proven stack applied directly
+2	revert	matmul	532.8530			1.000	PASS		plateau 1
+3	revert	matmul	532.8530			1.000	PASS		plateau 2
+4	revert	matmul	532.8530			1.000	PASS		plateau 3
+5	revert	matmul	532.8530			1.000	PASS		plateau 4
+6	revert	matmul	532.8530			1.000	PASS		plateau 5

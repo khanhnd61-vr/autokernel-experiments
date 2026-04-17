@@ -1,0 +1,59 @@
+{
+  "model": "LlamaModel",
+  "input_shape": "1,512",
+  "dtype": "float16",
+  "gpu": "NVIDIA GeForce RTX 5070 Laptop GPU",
+  "reference": {
+    "output_shape": "[1, 512, 32000]",
+    "latency_ms": 20.15
+  },
+  "optimized": {
+    "output_shape": "[1, 512, 32000]",
+    "latency_ms": 22.01,
+    "kernels_replaced": [
+      {
+        "type": "gemm",
+        "rank": 1,
+        "speedup": 1.013,
+        "path": "/home/khanhnd61/work/vla-opt-kernel/workspace/kernel_gemm_1_optimized.py"
+      },
+      {
+        "type": "gemm",
+        "rank": 2,
+        "speedup": 1.092,
+        "path": "/home/khanhnd61/work/vla-opt-kernel/workspace/kernel_gemm_2_optimized.py"
+      },
+      {
+        "type": "gemm",
+        "rank": 3,
+        "speedup": 1.269,
+        "path": "/home/khanhnd61/work/vla-opt-kernel/workspace/kernel_gemm_3_optimized.py"
+      },
+      {
+        "type": "gemm",
+        "rank": 4,
+        "speedup": 1.071,
+        "path": "/home/khanhnd61/work/vla-opt-kernel/workspace/kernel_gemm_4_optimized.py"
+      },
+      {
+        "type": "gemm",
+        "rank": 5,
+        "speedup": 1.05,
+        "path": "/home/khanhnd61/work/vla-opt-kernel/workspace/kernel_gemm_5_optimized.py"
+      }
+    ]
+  },
+  "verification": {
+    "correctness": "PASS",
+    "max_abs_error": 3.2782554626464844e-06,
+    "mean_abs_error": 2.975747861455602e-07,
+    "has_nan": false,
+    "has_inf": false
+  },
+  "summary": {
+    "original_latency_ms": 20.15,
+    "optimized_latency_ms": 22.01,
+    "end_to_end_speedup": 0.916,
+    "kernels_replaced": 5
+  }
+}

@@ -1,0 +1,9 @@
+experiment	 tag     	 kernel_type	 throughput_tflops	 latency_us	 pct_peak	 speedup_vs_pytorch	 correctness	 peak_vram_mb	 description
+0	baseline	flash_attention	282.971	-	37.4	11.104	PASS	-	flash_attention_1 baseline -- starter kernel with fp16 QK overflow fix
+1	exp1_fa_stack	flash_attention	349.372	49.17	46.2	13.728	PASS	2400.0	exp 1: LOG2E+exp2+EVEN_N+num_stages=3 proven FA stack (+23.5% vs baseline)
+20	exp20_fp16_qk	flash_attention	377.325	-	49.9	14.827	PASS	-	exp 20: QK dot in fp16 tensor cores (+8.0% vs exp1)
+21	exp21_v_hoist	flash_attention	380.977	-	50.4	14.932	PASS	-	exp 21: hoist V load to top of loop -- K+V pipeline (+1.0% vs exp20)
+FA2_0	fa2_baseline	flash_attention	375.823	45.71	49.7	14.726	PASS	-	flash_attention_2 baseline with full proven FA stack applied (same shapes as FA_1)
+MM3_1	mm3_proven_stack	matmul	526.681	-	69.7	-	PASS	-	matmul_3 BM=BN=128 BK=64 GROUP=8 allow_tf32=True (+84% vs ~286 baseline)
+MM7_1	mm7_proven_stack	matmul	528.998	-	70.0	-	PASS	-	matmul_7 proven stack (same shape as matmul_3)
+MM10_1	mm10_proven_stack	matmul	529.018	-	70.0	-	PASS	-	matmul_10 proven stack (same shape as matmul_3)

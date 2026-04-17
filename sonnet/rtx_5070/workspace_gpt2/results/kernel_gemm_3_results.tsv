@@ -1,0 +1,6 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	kept	gemm	36.7970			1.000	PASS		direct apply 128x128+stages4: 36.8 TFLOPS (same shape as gemm1, applied known-best config)
+2	kept	gemm	36.9170			1.003	PASS		num_warps=4 explicit: flat +0.3% (within noise)
+3	kept	gemm	38.1050			1.036	PASS		num_stages=2: +3.2% (38.11 vs 36.92 TFLOPS) -- lower smem boosts occupancy
+4	revert	gemm	37.0230			1.036	PASS		num_stages=1: -2.8% regression (no overlap)
+5	kept	gemm	39.5800			1.076	PASS		BLOCK_K=64 + stages=2: +3.9% (39.58 vs 38.11 TFLOPS)

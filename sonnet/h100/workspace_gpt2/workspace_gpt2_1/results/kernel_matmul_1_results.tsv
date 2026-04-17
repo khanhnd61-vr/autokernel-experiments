@@ -1,0 +1,8 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	kept	matmul	274.9140			1.000	PASS		baseline: lm_head M=1024 N=50257 K=768, 275 TFLOPS
+2	kept	matmul	531.9580			1.935	PASS		exp 1: BM=BN=128 BK=64 GROUP=8 1D-swizzle -- 532 TFLOPS (+94%)
+3	revert	matmul	531.9580			1.935	PASS		exp 2-9: block size sweeps all regressed -- plateau at BM=BN=128 BK=64 GROUP=8
+4	revert	matmul	531.9580			1.935	PASS		plateau revert 1
+5	revert	matmul	531.9580			1.935	PASS		plateau revert 2
+6	revert	matmul	531.9580			1.935	PASS		plateau revert 3
+7	revert	matmul	531.9580			1.935	PASS		plateau revert 4

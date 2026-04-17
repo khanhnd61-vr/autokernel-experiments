@@ -1,0 +1,8 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	kept	gemm	24.6490			1.000	PASS		baseline: 64x64x32 tiles, fp32 acc; 43.3% peak
+2	kept	gemm	30.3610			1.232	PASS		128x128+stages4: +23.2% (30.36 vs 24.65 TFLOPS), 1.64x PyTorch
+3	revert	gemm	27.0450			1.232	PASS		rect 64x256: -10.9% regression (too wide for available registers)
+4	revert	gemm	29.6750			1.232	PASS		L2 swizzle: -2.2% flat, N=50257 too wide to benefit
+5	revert	gemm	26.0550			1.232	PASS		rect 128x64: -14.2% regression
+6	revert	gemm	2.2230			1.232	PASS		256x128: -92.7% severe register spill
+7	revert	gemm	30.5100			1.232	PASS		num_stages 4->5: +0.5% below 1% threshold, flat

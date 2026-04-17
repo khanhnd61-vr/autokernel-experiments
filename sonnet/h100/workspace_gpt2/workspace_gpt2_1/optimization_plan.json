@@ -1,0 +1,68 @@
+{
+    "kernels_to_optimize": [
+        {
+            "rank": 1,
+            "file": "workspace/kernel_matmul_1.py",
+            "op_type": "matmul",
+            "model_shape": {
+                "M": 2048,
+                "N": 2048,
+                "K": 2048
+            },
+            "gpu_time_ms": 8.365,
+            "pct_total": 13.4,
+            "estimated_speedup_potential": "2-3x"
+        },
+        {
+            "rank": 2,
+            "file": "workspace/kernel_matmul_2.py",
+            "op_type": "matmul",
+            "model_shape": {
+                "M": 2048,
+                "N": 2048,
+                "K": 2048
+            },
+            "gpu_time_ms": 8.365,
+            "pct_total": 13.4,
+            "estimated_speedup_potential": "2-3x"
+        },
+        {
+            "rank": 5,
+            "file": "workspace/kernel_softmax_5.py",
+            "op_type": "softmax",
+            "model_shape": {
+                "rows": 4096,
+                "cols": 4096
+            },
+            "gpu_time_ms": 3.796,
+            "pct_total": 6.1,
+            "estimated_speedup_potential": "1.5-3x"
+        },
+        {
+            "rank": 6,
+            "file": "workspace/kernel_softmax_6.py",
+            "op_type": "softmax",
+            "model_shape": {
+                "rows": 4096,
+                "cols": 4096
+            },
+            "gpu_time_ms": 3.796,
+            "pct_total": 6.1,
+            "estimated_speedup_potential": "1.5-3x"
+        },
+        {
+            "rank": 17,
+            "file": "workspace/kernel_layernorm_17.py",
+            "op_type": "layernorm",
+            "model_shape": {
+                "batch": 4096,
+                "dim": 2048
+            },
+            "gpu_time_ms": 1.202,
+            "pct_total": 1.9,
+            "estimated_speedup_potential": "1.5-3x"
+        }
+    ],
+    "total_optimization_targets": 5,
+    "covered_gpu_time_pct": 40.9
+}

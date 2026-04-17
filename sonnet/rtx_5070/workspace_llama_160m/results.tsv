@@ -1,0 +1,50 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+0	baseline-gemm1	gemm	39.134	439.00	68.7	1.018	FAIL	468.1	baseline: 64x64x32 tiles fp32 acc; FAIL deep_k fp16 (Triton/Blackwell vs cuBLAS diff) and fp32 tight tol; primary shapes PASS
+1	blk128-s4	gemm	39.629	433.51	69.6	1.028	FAIL	468.1	128x128 tiles + num_stages=4: +1.31	blk128-s4	gemm	39.629	433.51	69.6	1.028	FAIL	468.1	128x128 tiles + num_stages=4: +1.3%; 69.6% peak
+2	stages-3	gemm	36.677	468.40	64.4	1.026	FAIL	468.1	num_stages 4->3: -7.5% regression REVERT
+3	swizzle-gm8	gemm	39.654	433.24	69.6	1.022	FAIL	468.1	L2 swizzle GROUP_M=8: flat noise +0.06% REVERT
+4	warps-8	gemm	39.039	440.07	68.5	1.014	FAIL	468.1	num_warps=8: -1.5% regression REVERT
+5	stages-5	gemm	37.163	462.29	65.3	0.962	FAIL	468.1	num_stages 4->5: -6.2% regression REVERT
+6	autotune-8cfg	gemm	31.207	550.51	54.8	0.953	FAIL	468.1	autotune 8 configs: overhead -21% regression REVERT
+7	baseline-gemm2	gemm	31.712	50.79	55.7	1.009	FAIL	468.1	gemm2 baseline 64x64x32; M=512 N=2048 K=768; 55.7%% peak
+8	blk128-s4-g2	gemm	32.443	49.64	57.0	1.029	FAIL	468.1	gemm2 128x128+stages4: +2.3%; 57.0% peak
+9	rect-64x128-g2	gemm	29.606	54.40	52.0	0.992	FAIL	468.1	rect 64x128: -8.8% regression REVERT
+10	rect-128x256-g2	gemm	12.048	133.68	21.2	0.391	FAIL	468.1	128x256 severe register spill -62.8% REVERT
+11	blkK64-g2	gemm	28.200	57.11	49.5	0.946	FAIL	468.1	BLOCK_K 32->64: -13.1% regression REVERT
+12	swizzle-gm4-g2	gemm	33.712	47.78	59.2	1.126	FAIL	468.1	L2 swizzle GROUP_M=4: +3.9%; 59.2%% peak 1.126x pytorch
+13	swizzle-gm8-g2	gemm	33.900	47.51	59.5	1.144	FAIL	468.1	swizzle GROUP_M=8: +0.56% noise REVERT
+14	swizzle-gm2-g2	gemm	33.710	47.78	59.2	1.135	FAIL	468.1	swizzle GROUP_M=2: flat REVERT
+15	warps8-swizzle-g2	gemm	32.522	49.52	57.1	1.088	FAIL	468.1	num_warps=8 with swizzle: -3.5% REVERT
+16	stages2-g2	gemm	28.001	57.52	49.2	0.942	FAIL	468.1	stages=2: -16.9% regression REVERT
+17	multiple-of-g2	gemm	33.987	47.39	59.7	1.139	FAIL	468.1	tl.multiple_of + maskless loads: +0.82% simpler KEEP
+18	stride-hints-g2	gemm	33.745	47.73	59.3	1.132	FAIL	468.1	stride multiple_of hints: -0.71% REVERT
+19	simpler-loop-g2	gemm	33.868	47.56	59.5	1.134	FAIL	468.1	remove dead offs_k + store mask: -0.35% simpler KEEP
+20	tf32-true-g2	gemm	34.636	46.50	60.8	1.101	FAIL	468.1	allow_tf32=True: +2.27% 60.8%% peak
+21	warps8-tf32-g2	gemm	31.896	50.50	56.0	1.009	FAIL	468.1	num_warps=8 tf32=True: -7.9% REVERT
+22	stages3-tf32-g2	gemm	33.473	48.12	58.8	1.122	FAIL	468.1	stages=3 tf32=True: -3.4% REVERT
+23	blk64-g2	gemm	31.379	51.33	55.1	1.003	FAIL	468.1	64x64 tiles with tf32: -9.4% REVERT
+24	gm8-tf32-g2	gemm	33.816	47.63	59.4	1.128	FAIL	468.1	GROUP_M=8 tf32=True: -2.4% REVERT
+25	splitk4-g2	gemm	20.631	78.07	36.2	0.649	FAIL	468.1	Split-K SPLIT_K=4: smoke FAIL -40% REVERT
+26	baseline-gemm3	gemm	31.867	789.73	56.0	1.206	FAIL	468.1	gemm3 baseline 64x64x32; M=512 N=32000 K=768; 1.206x pytorch
+27	full-pack-g3	gemm	40.431	622.44	71.0	1.163	FAIL	468.1	gemm3 full validated pack: +26.9%%; 71.0%% peak
+28	gm8-g3	gemm	39.816	632.05	69.9	1.155	FAIL	468.1	GROUP_M=8 gemm3: -1.5% REVERT
+29	warps8-g3	gemm	40.131	627.09	70.5	1.160	FAIL	468.1	num_warps=8 gemm3: -0.74% REVERT
+30	rect-64x256-g3	gemm	34.516	729.11	60.6	0.997	FAIL	468.1	rect 64x256 gemm3: -14.6% REVERT
+31	blkK64-s2-g3	gemm	37.995	662.35	66.7	1.097	FAIL	468.1	BLOCK_K=64+stages=2 gemm3: -6.0% REVERT
+32	warps2-g3	gemm	20.497	1227.77	36.0	0.601	FAIL	468.1	num_warps=2 gemm3: -49.3% REVERT; PLATEAU 5/5 move to gemm4
+33	baseline-gemm4	gemm	29.432	54.72	51.7	0.972	FAIL	468.1	gemm4 baseline 64x64x32 2D grid; M=512 N=768 K=2048; 51.7% peak
+34	full-pack-1d-g4	gemm	27.655	58.24	48.6	1.288	FAIL	468.1	gemm4 full pack 1D swizzle: -6.0% regression REVERT (too few blocks for 1D swizzle)
+35	2d-s4-tf32-g4	gemm	31.512	51.11	55.3	1.036	FAIL	468.1	gemm4 2D grid+stages=4+tf32+multiple_of+maskless: +7.1%; 55.3% peak KEEP
+36	blk128-g4	gemm	26.106	61.70	45.8	0.967	FAIL	468.1	128x128 gemm4: -17.1% REVERT (24 blocks < 36 SMs)
+37	rect-64x128-g4	gemm	25.854	62.30	45.4	0.847	FAIL	468.1	64x128 gemm4: -17.9% REVERT
+38	warps8-g4	gemm	27.148	59.33	47.7	1.256	FAIL	468.1	num_warps=8 gemm4: -13.8% REVERT
+39	blkK64-s2-g4	gemm	27.009	59.63	47.4	0.895	FAIL	468.1	BLOCK_K=64+stages=2 gemm4: -14.3% REVERT
+40	stages3-g4	gemm	29.910	53.85	52.5	0.976	FAIL	468.1	stages=3 gemm4: -5.1% REVERT; PLATEAU 5/5 move to gemm5
+41	baseline-gemm5	gemm	25.623	23.57	45.0	1.072	FAIL	468.1	gemm5 baseline 64x64x32 2D grid; M=512 N=768 K=768; 45.0% peak
+42	2d-s4-tf32-g5	gemm	26.513	22.78	46.6	1.136	FAIL	468.1	gemm5 2D grid+stages=4+tf32+multiple_of+maskless: +3.5%; 46.6% peak KEEP
+43	stages5-g5	gemm	26.917	22.44	47.3	1.149	FAIL	468.1	gemm5 num_stages=5: +1.5%; 47.3% peak KEEP
+44	stages6-g5	gemm	19.570	30.86	34.4	1.034	FAIL	468.1	stages=6 gemm5: -27.2% SHMEM overload REVERT
+45	swizzle-gm8-g5	gemm	26.949	22.41	47.3	1.151	FAIL	468.1	1D swizzle GROUP_M=8 gemm5: +0.12% noise REVERT
+46	blkK64-s3-g5	gemm	26.384	22.89	46.3	1.135	FAIL	468.1	BLOCK_K=64+stages=3 gemm5: -2.0% REVERT
+47	warps8-g5	gemm	25.974	23.25	45.6	1.111	FAIL	468.1	num_warps=8 gemm5: -3.5% REVERT
+48	blk32-g5	gemm	18.468	32.70	32.4	0.796	FAIL	468.1	32x32 tiles gemm5: -31.4% REVERT; PLATEAU 5/5 all kernels done

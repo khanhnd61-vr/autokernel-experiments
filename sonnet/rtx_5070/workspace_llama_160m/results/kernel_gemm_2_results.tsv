@@ -1,0 +1,20 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	kept	gemm	31.7120			1.000	PASS		gemm2 baseline: 64x64x32 tiles; M=512 N=2048 K=768; 55.7% peak
+2	kept	gemm	32.4430			1.023	PASS		gemm2 128x128+s4: +2.3%; 57.0% peak
+3	revert	gemm	29.6060			1.023	PASS		rect 64x128: -8.8% regression; fewer compute per block hurts more than extra parallelism
+4	revert	gemm	12.0480			1.023	PASS		128x256: -62.8% severe register spill REVERT
+5	revert	gemm	28.2000			1.023	PASS		BLOCK_K 32->64: -13.1% regression; more SMEM pressure hurts
+6	kept	gemm	33.7120			1.063	PASS		L2 swizzle GROUP_M=4: +3.9%; 59.2% peak 1.126x pytorch
+7	revert	gemm	33.9000			1.063	PASS		GROUP_M=8 vs 4: +0.56% noise level REVERT
+8	revert	gemm	33.7100			1.063	PASS		GROUP_M=2: flat vs 4 REVERT
+9	revert	gemm	32.5220			1.063	PASS		num_warps=8 with swizzle: -3.5% regression
+10	revert	gemm	28.0010			1.063	PASS		stages=2: -16.9% regression; stages=4 pipeline depth important for K=768
+11	kept	gemm	33.9870			1.072	PASS		tl.multiple_of + maskless loads: +0.82% simpler hot path; keep per simplicity rule
+12	revert	gemm	33.7450			1.072	PASS		stride multiple_of hints: -0.71% flat/regression REVERT
+13	kept	gemm	33.8680			1.072	PASS		remove dead offs_k + store mask: -0.35% noise but simpler; KEEP
+14	kept	gemm	34.6360			1.092	PASS		allow_tf32=True: +2.27%; 60.8% peak; unlocks faster tensor core path
+15	revert	gemm	31.8960			1.092	PASS		num_warps=8 with tf32=True: -7.9% REVERT
+16	revert	gemm	33.4730			1.092	PASS		stages=3 with tf32: -3.4% regression
+17	revert	gemm	31.3790			1.092	PASS		64x64 tiles: -9.4% regression; smaller tiles hurt arithmetic intensity
+18	revert	gemm	33.8160			1.092	PASS		GROUP_M=8 with tf32: -2.4% REVERT
+19	revert	gemm	20.6310			1.092	PASS		Split-K: smoke FAIL, fp16 atomic_add race conditions -40% REVERT

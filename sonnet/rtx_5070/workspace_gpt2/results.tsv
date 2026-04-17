@@ -1,0 +1,28 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+0	baseline-gemm1	gemm	35.861	479.06	63.0	1.044	FAIL	468.1	baseline: 64x64x32 tiles, fp32 acc; FAIL deep_k fp16 (Triton/Blackwell vs cuBLAS diff) and fp32 tight tol; primary GPT2 shapes PASS
+1	blk-128x128	gemm	39.462	435.35	69.3	1.024	FAIL	468.1	BLOCK 64x64->128x128: +10% throughput
+2	stages-4	gemm	39.979	429.73	70.2	1.029	FAIL	468.1	add num_stages=4 software pipelining: +1.3%
+3	swizzle-gm8	gemm	40.000	429.50	70.2	1.038	FAIL	468.1	L2 swizzle GROUP_M=8: flat, REVERT
+4	blk-k64	gemm	34.507	497.87	60.6	0.911	FAIL	468.1	BLOCK_K 32->64: -14% regression, REVERT
+5	warps-8	gemm	35.762	480.40	62.8	1.029	FAIL	468.1	num_warps=8: -10.5% regression, REVERT
+6	stages-3	gemm	36.246	473.98	63.6	1.039	FAIL	468.1	num_stages 4->3: -9.3%, REVERT
+7	tf32-true	gemm	39.138	438.96	68.7	1.018	FAIL	468.1	allow_tf32=True: -2.1%, REVERT
+8	baseline-gemm2	gemm	24.649	3206.98	43.3	1.343	FAIL	468.1	gemm2 baseline 64x64x32: 1.34x vs pytorch, 43.3% peak
+9	blk128-s4-gemm2	gemm	30.361	2603.55	53.3	1.637	FAIL	468.1	gemm2 128x128+stages4: +23.2%
+10	rect-64x256	gemm	27.045	2922.87	47.5	1.578	FAIL	468.1	rect 64x256: -10.9% regression REVERT
+11	swizzle-gm8-g2	gemm	29.675	2663.80	52.1	1.613	FAIL	468.1	L2 swizzle gemm2: -2.2% flat REVERT
+12	rect-128x64	gemm	26.055	3033.87	45.8	1.512	FAIL	468.1	rect 128x64: -14.2% regression REVERT
+13	rect-256x128	gemm	2.223	35551.74	3.9	0.130	FAIL	468.1	256x128: -92.7% severe spill REVERT
+14	stages-5-g2	gemm	30.510	2590.83	53.6	1.657	FAIL	468.1	num_stages 5: +0.5% flat REVERT
+15	gemm3-best	gemm	36.797	466.88	64.6	1.039	FAIL	468.1	gemm3 apply 128x128+stages4 directly: 36.8 TFLOPS
+16	gemm3-w4	gemm	36.917	465.37	64.8	1.065	FAIL	468.1	num_warps=4 explicit: flat
+17	gemm3-s2	gemm	38.105	450.86	66.9	1.004	FAIL	468.1	num_stages=2: +3.2%
+18	gemm3-s1	gemm	37.023	0	65.0	0.970	FAIL	0	num_stages=1: -2.8% regression REVERT
+19	gemm3-k64-s2	gemm	39.580	0	69.5	1.020	FAIL	0	BLOCK_K=64+stages=2: +3.9%
+20	gemm3-k64-s3	gemm	34.773	494.06	61.1	0.913	FAIL	0	BLOCK_K=64+stages=3: -12.1% regression REVERT
+21	gemm3-k64-w8	gemm	30.677	560.02	53.9	0.789	FAIL	0	warps=8+K=64+stages=2: -22.5% regression REVERT
+22	gemm3-k64-tf32	gemm	39.627	433.54	69.6	1.041	FAIL	0	allow_tf32=True+K=64+stages=2: +0.1% flat REVERT
+23	gemm16-baseline	gemm	36.060	476.42	63.3	1.041	FAIL	0	gemm16 baseline 64x64x32 default config
+24	gemm16-k64-s2	gemm	39.200	437.00	68.8	1.029	FAIL	0	gemm16 128x128+K64+stages2+warps4: +8.7% KEEP
+25	gemm16-k32-s4	gemm	39.478	434.00	69.3	1.022	FAIL	0	gemm16 K32+stages4: +0.7% vs exp24 flat REVERT
+26	gemm18-best-cfg	gemm	39.295	436.00	69.0	1.022	FAIL	0	gemm18 128x128+K64+stages2+warps4 (same shape M=N=K=2048): KEEP

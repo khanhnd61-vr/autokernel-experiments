@@ -1,0 +1,8 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	kept	matmul	285.7750			1.000	PASS		baseline
+2	kept	matmul	534.6940			1.871	PASS		BM=BN=128 BK=64 EVEN_K EVEN_MN allow_tf32=False proven stack
+3	revert	matmul	534.8300			1.871	PASS		num_stages=3: noise +0.025%
+4	revert	matmul	520.0020			1.871	PASS		num_warps=8: -2.7%
+5	revert	matmul	496.2260			1.871	PASS		num_stages=4: -7.2%
+6	revert	matmul	517.5060			1.871	PASS		L2 swizzle: -3.2%
+7	revert	matmul	382.6360			1.871	PASS		num_stages=2: -28.4%

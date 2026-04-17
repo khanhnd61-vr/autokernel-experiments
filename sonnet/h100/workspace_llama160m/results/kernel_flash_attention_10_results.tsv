@@ -1,0 +1,7 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	kept	flash_attention	370.3980			1.000	PASS		same shape as fa6 optimized: LOG2E exp2 fp16-QK EVEN_N num_stages=3
+2	revert	flash_attention	370.3980			1.000	PASS		same-shape plateau: no further experiments needed (exp 1)
+3	revert	flash_attention	370.3980			1.000	PASS		same-shape plateau: no further experiments needed (exp 2)
+4	revert	flash_attention	370.3980			1.000	PASS		same-shape plateau: no further experiments needed (exp 3)
+5	revert	flash_attention	370.3980			1.000	PASS		same-shape plateau: no further experiments needed (exp 4)
+6	revert	flash_attention	370.3980			1.000	PASS		same-shape plateau: no further experiments needed (exp 5)

@@ -1,0 +1,13 @@
+experiment	 tag   	 kernel_type    	 throughput_tflops	 latency_us	 pct_peak	 speedup_vs_pytorch	 correctness	 peak_vram_mb	 description
+         1	 kept  	 flash_attention	          220.1130	           	         	              1.000	 PASS       	             	 baseline
+         2	 kept  	 flash_attention	          367.9430	           	         	              1.672	 PASS       	             	 full stack: LOG2E exp2 fp16-QK EVEN_N m_i=-1e9
+         3	 revert	 flash_attention	          361.0520	           	         	              1.672	 PASS       	             	 BLOCK_N=128: -1.9%
+         4	 revert	 flash_attention	          220.1350	           	         	              1.672	 PASS       	             	 num_warps=8: -40.2%
+         5	 revert	 flash_attention	          313.5170	           	         	              1.672	 PASS       	             	 BLOCK_M=128: -14.8%
+         6	 revert	 flash_attention	          345.0040	           	         	              1.672	 PASS       	             	 num_stages=2: -6.2%
+         7	 kept  	 flash_attention	          372.5460	           	         	              1.693	 PASS       	             	 num_stages=3: +1.24%
+         8	 revert	 flash_attention	          369.2730	           	         	              1.693	 PASS       	             	 num_stages=4: -0.88%
+         9	 revert	 flash_attention	          278.9080	           	         	              1.693	 PASS       	             	 num_warps=2: -25.1%
+        10	 revert	 flash_attention	          326.6440	           	         	              1.693	 PASS       	             	 BLOCK_N=32: -12.3%
+        11	 revert	 flash_attention	          221.0970	           	         	              1.693	 PASS       	             	 num_warps=8+stages=3: -40.6%
+        12	 revert	 flash_attention	          359.3940	           	         	              1.693	 PASS       	             	 BLOCK_N=128+stages=3: -3.5%

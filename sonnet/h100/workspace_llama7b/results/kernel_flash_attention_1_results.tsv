@@ -1,0 +1,2 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	kept	flash_attention	282.9710			1.000	PASS		baseline -- fp16 QK round-trip fix
