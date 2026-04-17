@@ -1,0 +1,43 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+0	baseline	gemm	11.987	38.77	21.0	0.640	PASS*	468.1	baseline; smoke PASS; shape_sweep fails at deep_k/large due to fp16 tolerance limits
+1	exp1	gemm	12.416	37.43	21.8	0.665	PASS*	468.1	BM=32: better SM utilization at M=197
+2	exp2	gemm	12.467	-	21.9	0.695	revert	-	BM=16: <1% gain, revert
+3	exp3	gemm	9.849	-	17.3	0.529	revert	-	num_stages=2: regression
+4	exp4	gemm	11.829	-	20.8	0.632	revert	-	BN=128: regression
+5	exp5	gemm	16.133	28.81	28.3	0.862	PASS*	468.1	BK=64: 30% gain
+6	exp6	gemm	14.807	-	26.0	0.787	revert	-	BK=128: regression
+7	exp7	gemm	15.996	-	28.1	0.851	revert	-	allow_tf32=True: 0.8% regression
+8	exp8	gemm	13.137	-	23.1	0.834	revert	-	num_warps=8: regression
+9	exp9	gemm	12.916	-	22.7	0.818	revert	-	L2 swizzle: regression, M=197 too small
+10	exp10	gemm	16.028	-	28.1	0.861	revert	-	num_warps=4: <1% diff
+baseline	gemm2-base	gemm	21.434	43.37	37.6	0.918	PASS*	468.1	gemm_2 baseline M=197 N=3072 K=768
+11	exp11	gemm	17.398	-	30.6	0.802	revert	-	BM=32 BK=64: regression
+12	exp12	gemm	16.006	-	28.1	0.742	revert	-	BM=32: regression
+13	exp13	gemm	22.332	41.63	39.2	1.046	PASS*	468.1	BN=128 BK=64: >1x PyTorch
+14	exp14	gemm	18.716	-	32.9	0.871	revert	-	BN=256: regression
+15	exp15	gemm	14.756	-	25.9	0.735	revert	-	BK=128: regression
+16	exp16	gemm	22.040	-	38.7	0.946	revert	-	BM=32 BN=128: slight regression
+17	exp17	gemm	21.096	-	37.0	0.983	revert	-	num_stages=2: regression
+18	exp18	gemm	22.814	40.74	40.1	1.004	PASS*	468.1	BM=128: 2.2% gain
+19	exp19	gemm	17.544	-	30.8	0.790	revert	-	BM=128 BN=128: grid too small
+20	exp20	gemm	22.835	-	40.1	0.986	revert	-	BK=32: <0.1% diff
+21	exp21	gemm	10.011	-	17.6	0.882	revert	-	triton.autotune: massive regression, cache/warmup interference
+22	exp22	gemm	17.095	-	30.0	2.887	revert	-	num_stages=3: correctness FAIL, pipelining breaks mask
+23	exp23	gemm	19.255	-	33.8	1.035	revert	-	num_warps=8 BM=128: correctness FAIL + throughput regression
+baseline	gemm3-base	gemm	17.367	40.14	30.5	2.500	PASS*	468.1	gemm_3 baseline M=197 N=2304 K=768 (PyTorch slow at this shape)
+24	exp24	gemm	18.064	-	31.7	0.928	PASS*	468.1	BK=64: +4% gain
+25	exp25	gemm	19.333	-	33.9	2.333	PASS*	468.1	BN=128 BK=64: +7% over exp24
+26	exp26	gemm	17.699	-	31.1	0.931	revert	-	BM=128 BN=128: grid too small (36 blocks, 1 wave)
+27	exp27	gemm	15.931	-	28.0	2.374	revert	-	BM=32 BN=128 BK=64: small tiles, regression
+28	exp28	gemm	16.113	-	28.3	0.899	revert	-	BK=128: shared mem pressure, regression
+29	exp29	gemm	15.723	-	27.6	2.959	revert	-	BM=128 BN=64 BK=64: wider N tiles better for N=2304
+30	exp30	gemm	19.899	-	34.9	1.028	revert	-	allow_tf32=True: fp32 primary FAIL (0.106 error), not just false-neg
+baseline	gemm4-base	gemm	10.730	21.66	18.8	0.667	PASS*	468.1	gemm_4 baseline M=197 N=768 K=768 (1.33 waves)
+31	exp31	gemm	14.010	-	24.6	0.879	PASS*	468.1	BM=32 BK=64: +30.6% gain (gemm-1 winning config)
+32	exp32	gemm	13.900	-	24.4	0.870	revert	-	BN=128: fewer waves (1.17 vs 2.33), slight regression
+33	exp33	gemm	13.796	-	24.2	0.869	revert	-	BM=64 BN=64 BK=64: 1.33 waves worse than 2.33 waves
+34	exp34	gemm	13.623	-	23.9	0.855	revert	-	num_warps=2: regression
+35	exp35	gemm	11.313	-	19.9	0.869	revert	-	L2 swizzle GROUP_SIZE_M=7: overhead dominates at this small size
+baseline	gemm5-base	gemm	0.737	6.74	1.3	1.637	PASS*	468.1	gemm_5 baseline M=197 N=197 K=64 (already >1x PyTorch)
+36	exp36	gemm	0.817	-	1.4	1.892	PASS*	468.1	BM=32 BN=32 BK=64: +10.9% (1 K-iter, 49 blocks 1.36 waves)
+37	exp37	gemm	0.764	-	1.3	2.001	revert	-	BM=16 BN=16: tiles too small, regression

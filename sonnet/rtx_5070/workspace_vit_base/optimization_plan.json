@@ -1,0 +1,72 @@
+{
+    "kernels_to_optimize": [
+        {
+            "rank": 1,
+            "file": "workspace/kernel_gemm_1.py",
+            "op_type": "gemm",
+            "model_shape": {
+                "M": 197,
+                "N": 768,
+                "K": 3072
+            },
+            "gpu_time_ms": 5.619,
+            "pct_total": 21.5,
+            "estimated_speedup_potential": "2-3x"
+        },
+        {
+            "rank": 2,
+            "file": "workspace/kernel_gemm_2.py",
+            "op_type": "gemm",
+            "model_shape": {
+                "M": 197,
+                "N": 3072,
+                "K": 768
+            },
+            "gpu_time_ms": 4.934,
+            "pct_total": 18.8,
+            "estimated_speedup_potential": "2-3x"
+        },
+        {
+            "rank": 3,
+            "file": "workspace/kernel_gemm_3.py",
+            "op_type": "gemm",
+            "model_shape": {
+                "M": 197,
+                "N": 2304,
+                "K": 768
+            },
+            "gpu_time_ms": 3.81,
+            "pct_total": 14.6,
+            "estimated_speedup_potential": "2-3x"
+        },
+        {
+            "rank": 4,
+            "file": "workspace/kernel_gemm_4.py",
+            "op_type": "gemm",
+            "model_shape": {
+                "M": 197,
+                "N": 768,
+                "K": 768
+            },
+            "gpu_time_ms": 3.432,
+            "pct_total": 13.1,
+            "estimated_speedup_potential": "2-3x"
+        },
+        {
+            "rank": 5,
+            "file": "workspace/kernel_gemm_5.py",
+            "op_type": "gemm",
+            "model_shape": {
+                "batch": 12,
+                "M": 197,
+                "N": 197,
+                "K": 64
+            },
+            "gpu_time_ms": 1.215,
+            "pct_total": 4.6,
+            "estimated_speedup_potential": "2-3x"
+        }
+    ],
+    "total_optimization_targets": 5,
+    "covered_gpu_time_pct": 72.6
+}

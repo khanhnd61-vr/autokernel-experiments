@@ -1,0 +1,12 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	kept	gemm	11.9870			1.000	PASS		baseline: smoke PASS, shape_sweep fails at deep_k/large due to fp16 tolerance limitations
+2	kept	gemm	12.4160			1.036	PASS		BM=32 vs 64: better SM utilization at M=197, 3.6% gain
+3	revert	gemm	12.4670			1.036	PASS		BM=16: only 0.4% gain, below 1% threshold, reverting
+4	revert	gemm	9.8490			1.036	PASS		num_stages=2: regression, small M tiles don't benefit from pipelining
+5	revert	gemm	11.8290			1.036	PASS		BN=128: regression vs BN=64
+6	kept	gemm	16.1330			1.346	PASS		BK=64: 30% gain, better arithmetic intensity per tile
+7	revert	gemm	14.8070			1.346	PASS		BK=128: regression vs BK=64
+8	revert	gemm	15.9960			1.346	PASS		allow_tf32=True: 0.8% regression, not significant for fp16 inputs
+9	revert	gemm	13.1370			1.346	PASS		num_warps=8: regression, too many warps for small tile
+10	revert	gemm	12.9160			1.346	PASS		L2 swizzle GROUP_SIZE_M=8: regression, M=197 has only 7 M-blocks
+11	revert	gemm	16.0280			1.346	PASS		num_warps=4: <1% difference, revert

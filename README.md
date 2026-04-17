@@ -40,3 +40,13 @@ autokernel_output/
 - **`results.tsv`**: Tabular results summary
 - **`results/`**: Directory containing detailed output files
 
+## Experiment results
+
+### Sonnet
+
+| Target Machine | llama_160m | llama_7b | gpt2 | bert | vit | qwen |
+|---|---|---|---|---|---|---|
+| H100 | - | - | - | - | - | - |
+| RTX 5070 | [1.05x](sonnet/rtx_5070/workspace_llama_160m/aggregate_report.md) | - | [1.05x](sonnet/rtx_5070/workspace_gpt2/aggregate_report.md) | [1.08x](sonnet/rtx_5070/workspace_bert_base/aggregate_report.md) | [1.13x](sonnet/rtx_5070/workspace_vit_base/aggregate_report.md) | - |
+| Orin Nano | - | - | - | - | - | - |
+| AGX Orin | - | - | - | - | - | - |

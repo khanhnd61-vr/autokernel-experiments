@@ -1,0 +1,12 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	kept	gemm	21.4340			1.000	PASS		baseline
+2	revert	gemm	17.3980			1.000	PASS		BM=32 BK=64: regression for K=768, less beneficial
+3	revert	gemm	16.0060			1.000	PASS		BM=32: regression, baseline already has good occupancy
+4	kept	gemm	22.3320			1.042	PASS		BN=128 BK=64: 4.2% gain, first >1x vs PyTorch
+5	revert	gemm	18.7160			1.042	PASS		BN=256: register spill, regression
+6	revert	gemm	14.7560			1.042	PASS		BK=128 BN=64: regression
+7	revert	gemm	22.0400			1.042	PASS		BM=32: slight regression, BM=64 better for this shape
+8	revert	gemm	21.0960			1.042	PASS		num_stages=2: regression
+9	kept	gemm	22.8140			1.064	PASS		BM=128 BN=64 BK=64: 2.2% gain over BM=64 BN=128
+10	revert	gemm	17.5440			1.064	PASS		BM=128 BN=128: grid too small (48 blocks)
+11	revert	gemm	22.8350			1.064	PASS		BK=32: <0.1% diff from BK=64, same performance
