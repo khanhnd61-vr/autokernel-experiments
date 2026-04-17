@@ -1,0 +1,73 @@
+{
+    "kernels_to_optimize": [
+        {
+            "rank": 1,
+            "file": "workspace/kernel_gemm_1.py",
+            "op_type": "gemm",
+            "model_shape": {
+                "M": 2048,
+                "N": 2048,
+                "K": 2048
+            },
+            "gpu_time_ms": 141.871,
+            "pct_total": 26.1,
+            "estimated_speedup_potential": "2-3x"
+        },
+        {
+            "rank": 4,
+            "file": "workspace/kernel_gemm_4.py",
+            "op_type": "gemm",
+            "model_shape": {
+                "M": 2048,
+                "N": 2048,
+                "K": 2048
+            },
+            "gpu_time_ms": 72.018,
+            "pct_total": 13.3,
+            "estimated_speedup_potential": "2-3x"
+        },
+        {
+            "rank": 6,
+            "file": "workspace/kernel_flash_attention_6.py",
+            "op_type": "flash_attention",
+            "model_shape": {
+                "batch": 8,
+                "heads": 512,
+                "seq_len": 12,
+                "head_dim": 64
+            },
+            "gpu_time_ms": 24.027,
+            "pct_total": 4.4,
+            "estimated_speedup_potential": "2-4x"
+        },
+        {
+            "rank": 7,
+            "file": "workspace/kernel_flash_attention_7.py",
+            "op_type": "flash_attention",
+            "model_shape": {
+                "batch": 2,
+                "heads": 32,
+                "seq_len": 1024,
+                "head_dim": 64
+            },
+            "gpu_time_ms": 24.027,
+            "pct_total": 4.4,
+            "estimated_speedup_potential": "2-4x"
+        },
+        {
+            "rank": 8,
+            "file": "workspace/kernel_fused_mlp_8.py",
+            "op_type": "fused_mlp",
+            "model_shape": {
+                "batch": 8,
+                "dim": 512,
+                "hidden": 3072
+            },
+            "gpu_time_ms": 15.498,
+            "pct_total": 2.9,
+            "estimated_speedup_potential": "2-3x"
+        }
+    ],
+    "total_optimization_targets": 5,
+    "covered_gpu_time_pct": 51.1
+}

@@ -1,0 +1,2 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	kept	gemm	33.5780			1.000	PASS		baseline -- 33.6 TFLOPS, 59.0% peak, BLOCK 64x64x32

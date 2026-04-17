@@ -1,0 +1,41 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	apr17-bert-base	gemm	35.914	134.54	63.1	1.026	FAIL	468.1	baseline -- BLOCK_SIZE_M=64 N=64 K=32, allow_tf32=False; correctness fails deep_k+edge
+2	apr17-bert-base	gemm	37.369	129.30	65.6	1.075	FAIL	468.1	BLOCK_SIZE_M=128 N=128 K=32: +4.1% throughput, 65.6% peak
+3	apr17-bert-base	gemm	37.116	130.21	65.2	1.064	FAIL	468.1	num_stages=4: -0.7% vs best, REVERT
+4	apr17-bert-base	gemm	37.027	130.54	65.0	1.026	FAIL	468.1	allow_tf32=True: -0.9% vs best, REVERT
+5	apr17-bert-base	gemm	38.670	125.48	67.9	1.116	FAIL	468.1	BLOCK_N=64: 384 CTAs, +3.5% vs prev best
+6	apr17-bert-base	gemm	38.464	126.00	67.5	1.085	FAIL	468.1	L2 swizzle GROUP_M=8: -0.5% vs best, REVERT
+7	apr17-bert-base	gemm	34.976	138.28	61.4	0.997	FAIL	468.1	num_warps=8: -9.6% regression, REVERT
+8	apr17-bert-base	gemm	36.386	132.45	63.9	1.034	FAIL	468.1	BLOCK_K=64: -5.9% regression, REVERT
+9	apr17-bert-base	gemm	37.495	129.06	65.8	1.058	FAIL	468.1	num_stages=3 on 128x64: -3% regression, REVERT
+10	apr17-bert-base	gemm	38.786	124.86	68.1	1.096	FAIL	468.1	BLOCK_M=64 N=128: +0.3% vs best (<1% thresh), REVERT
+11	apr17-bert-base	gemm	33.578	575.59	59.0	1.077	FAIL	468.1	gemm4 baseline M=4096 N=3072 K=768 -- 64x64x32
+12	apr17-bert-base	gemm	38.267	130.84	67.2	1.167	FAIL	468.1	gemm4 BLOCK_SIZE_M=128 N=128 K=32: +14.0% vs baseline (67.2% peak, 1.167x PyTorch)
+13	apr17-bert-base	gemm	36.367	531.46	63.9	1.107	FAIL	468.1	gemm4 BLOCK_SIZE_N=64: -5.0% vs best, REVERT
+14	apr17-bert-base	gemm	38.337	504.14	67.3	1.166	FAIL	468.1	gemm4 num_stages=3: +0.18% vs best (<1% thresh), REVERT
+15	apr17-bert-base	gemm	35.788	540.05	62.8	0.946	FAIL	468.1	gemm4 BLOCK_K=64: -6.5% regression (register spill), REVERT
+16	apr17-bert-base	gemm	15.328	1260.89	26.9	0.473	FAIL	468.1	gemm4 BLOCK_M=256 N=128: severe register spill, REVERT
+17	apr17-bert-base	gemm	41.535	465.32	72.9	1.106	FAIL	468.1	gemm4 L2 swizzle GROUP_M=8 (1D grid): +8.5% vs best (72.9% peak)
+18	apr17-bert-base	gemm	41.096	470.30	72.2	1.090	FAIL	468.1	gemm4 GROUP_M=4: -1.1% vs best, REVERT
+19	apr17-bert-base	gemm	40.667	474.72	71.4	1.078	FAIL	468.1	gemm4 GROUP_M=16: -2.1% vs best, REVERT
+20	apr17-bert-base	gemm	38.065	507.88	66.8	1.187	FAIL	468.1	gemm4 swizzle+num_stages=3: -8.4% regression, REVERT
+21	apr17-bert-base	gemm	18.545	1039.17	32.6	0.524	FAIL	468.1	gemm4 num_warps=2+swizzle: severe regression, REVERT
+22	apr17-bert-base	gemm	37.790	509.50	66.4	1.142	FAIL	468.1	gemm4 num_warps=8+swizzle: -9.0% regression, REVERT -- PLATEAU (5 consecutive), done
+23	apr17-bert-base	flash_attention	25.917	N/A	45.5	8.005	FAIL	2376.1	fa6 BLOCK_M=128 N=64: -31.4% regression (poor occupancy), REVERT
+24	apr17-bert-base	flash_attention	39.176	N/A	68.8	11.903	FAIL	2376.1	fa6 BLOCK_N=32: +3.7% vs baseline (68.8% peak)
+25	apr17-bert-base	flash_attention	37.864	N/A	66.5	10.832	FAIL	2376.1	fa6 BLOCK_N=32+num_stages=3: -3.3% vs best, REVERT
+26	apr17-bert-base	flash_attention	52.403	N/A	92.0	14.906	FAIL	2376.1	fa6 native fp16 QK dot (remove fp32 cast): +33.8% vs best (92.0% peak!)
+27	apr17-bert-base	flash_attention	48.508	N/A	85.2	16.187	FAIL	2376.1	fa6 BLOCK_N=64+fp16: -7.4% vs best, REVERT
+28	apr17-bert-base	flash_attention	51.891	N/A	91.1	15.005	FAIL	2376.1	fa6 BLOCK_N=16+fp16: -1.0% vs best, REVERT
+29	apr17-bert-base	flash_attention	42.665	N/A	74.9	12.951	FAIL	2376.1	fa6 BLOCK_M=32 N=32: -18.6% regression, REVERT
+30	apr17-bert-base	flash_attention	30.693	N/A	53.9	9.959	FAIL	2376.1	fa6 num_warps=8: -41.4% regression, REVERT
+31	apr17-bert-base	flash_attention	52.430	N/A	92.1	18.412	FAIL	2376.1	fa6 out_dtype on V dot: +0.03% (<1%), REVERT -- PLATEAU (5 consecutive), done
+32	apr17-bert-base	flash_attention	53.966	N/A	94.8	15.333	FAIL	2376.1	fa7 apply fa6 optimized (BLOCK_N=32, fp16 QK): 94.8% peak (from 37.7 baseline), done
+33	apr17-bert-base	fused_mlp	27.456	N/A	48.2	1.036	FAIL	2376.1	mlp8 baseline=31.522; BLOCK_M=128 N=128: register spill, REVERT
+34	apr17-bert-base	fused_mlp	32.276	N/A	56.7	1.248	FAIL	2376.1	mlp8 BLOCK_M=128 N=64: +2.4% vs baseline
+35	apr17-bert-base	fused_mlp	32.845	N/A	57.7	1.271	FAIL	2376.1	mlp8 128x64 + L2 swizzle GROUP_M=8: +1.8% vs best (57.7% peak)
+36	apr17-bert-base	fused_mlp	32.643	N/A	57.3	1.266	FAIL	2376.1	mlp8 explicit fp32 dot: -0.6% vs best, REVERT
+37	apr17-bert-base	fused_mlp	32.884	N/A	57.7	1.272	FAIL	2376.1	mlp8 GROUP_M=4: +0.12% (<1%), REVERT
+38	apr17-bert-base	fused_mlp	31.727	N/A	55.7	1.231	FAIL	2376.1	mlp8 BLOCK_M=64 N=128+swizzle: -3.4% vs best, REVERT
+39	apr17-bert-base	fused_mlp	32.697	N/A	57.4	1.267	FAIL	2376.1	mlp8 128x64+swizzle+num_stages=3: -0.45% vs best, REVERT
+40	apr17-bert-base	fused_mlp	32.205	N/A	56.6	1.252	FAIL	2376.1	mlp8 64x64+swizzle: -2.0% vs best, REVERT -- PLATEAU (5 consecutive), done

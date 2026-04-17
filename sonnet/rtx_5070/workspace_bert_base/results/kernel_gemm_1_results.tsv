@@ -1,0 +1,11 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	kept	gemm	35.9140			1.000	PASS		baseline -- 35.9 TFLOPS, 63.1% peak compute, correctness FAIL on deep_k/edge cases (precision)
+2	kept	gemm	37.3690			1.041	PASS		BLOCK_SIZE_M=128 N=128: 37.4 TFLOPS +4.1% (65.6% peak)
+3	revert	gemm	37.1160			1.041	PASS		num_stages=4: -0.7% vs baseline (noise/regression), reverted
+4	revert	gemm	37.0270			1.041	PASS		allow_tf32=True: -0.9% vs best, REVERT
+5	kept	gemm	38.6700			1.077	PASS		BLOCK_N=64: 38.7 TFLOPS +3.5%% vs prev best (67.9%% peak, 1.116x PyTorch)
+6	revert	gemm	38.4640			1.077	PASS		L2 swizzle GROUP_M=8: -0.5%% vs best, REVERT
+7	revert	gemm	34.9760			1.077	PASS		num_warps=8: -9.6%% regression, REVERT
+8	revert	gemm	36.3860			1.077	PASS		BLOCK_K=64: -5.9%% regression vs best, REVERT
+9	revert	gemm	37.4950			1.077	PASS		num_stages=3 on 128x64: -3%% regression, REVERT
+10	revert	gemm	38.7860			1.077	PASS		BLOCK_M=64 N=128: +0.3%% (<1%% threshold), REVERT
