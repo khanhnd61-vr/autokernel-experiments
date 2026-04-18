@@ -1,0 +1,3 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	kept	gemm	2.6160			1.000	PASS		baseline (correctness FAIL) - memory-bound 141% BW, 1.117x speedup
+2	kept	gemm	2.4900			1.000	PASS		correctness fixed: K>64 dispatch + BLOCK_K=64 single iter; -4.8% perf

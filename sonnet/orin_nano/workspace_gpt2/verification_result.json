@@ -1,0 +1,53 @@
+{
+  "model": "GPT2",
+  "input_shape": "1,1024",
+  "dtype": "float16",
+  "gpu": "Orin",
+  "reference": {
+    "output_shape": "[1, 1024, 50257]",
+    "latency_ms": 311.94
+  },
+  "optimized": {
+    "output_shape": "[1, 1024, 50257]",
+    "latency_ms": 361.12,
+    "kernels_replaced": [
+      {
+        "type": "gemm",
+        "rank": 1,
+        "speedup": 1.511,
+        "path": "/home/khanh/work/vla-opt-kernel/workspace/kernel_gemm_1_optimized.py"
+      },
+      {
+        "type": "gemm",
+        "rank": 4,
+        "speedup": 1.071,
+        "path": "/home/khanh/work/vla-opt-kernel/workspace/kernel_gemm_4_optimized.py"
+      },
+      {
+        "type": "softmax",
+        "rank": 5,
+        "speedup": 3.313,
+        "path": "/home/khanh/work/vla-opt-kernel/workspace/kernel_softmax_5_optimized.py"
+      },
+      {
+        "type": "softmax",
+        "rank": 6,
+        "speedup": 3.072,
+        "path": "/home/khanh/work/vla-opt-kernel/workspace/kernel_softmax_6_optimized.py"
+      }
+    ]
+  },
+  "verification": {
+    "correctness": "PASS",
+    "max_abs_error": 4.76837158203125e-06,
+    "mean_abs_error": 3.914328488008323e-07,
+    "has_nan": false,
+    "has_inf": false
+  },
+  "summary": {
+    "original_latency_ms": 311.94,
+    "optimized_latency_ms": 361.12,
+    "end_to_end_speedup": 0.864,
+    "kernels_replaced": 4
+  }
+}

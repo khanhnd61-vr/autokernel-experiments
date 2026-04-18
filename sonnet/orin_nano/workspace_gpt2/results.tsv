@@ -1,0 +1,21 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	exp1-baseline	gemm	4.149	19051	49.6	1.090	FAIL	468.1	baseline starter kernel (correctness FAIL)
+2	exp2-blk128	gemm	5.174	15277	61.9	1.366	FAIL	468.1	BLOCK 128x128 - faster but still fails correctness
+3	exp3-blk64-128k	gemm	3.662	21587	43.8	0.962	FAIL	468.1	BLOCK 64x64 K128 - worse perf, same failures
+4	exp4-dispatch	gemm	1.879	42065	22.5	0.493	FAIL	468.1	BLOCK 64x64 K128 - correctness fix attempt
+5	exp5-dispatch-correct	gemm	4.168	18966	49.9	1.094	PASS	468.1	dimension dispatch: cuBLAS fallback for small squares SM87
+6	exp6-blk128-dispatch	gemm	5.781	13674	69.1	1.511	PASS	468.1	BLOCK 128x128 + dispatch: 1.511x speedup
+7	exp7-stages3	gemm	5.762	13719	68.9	1.507	PASS	468.1	num_stages=3 - no improvement, reverted
+8	exp8-tf32	gemm	5.577	14173	66.7	1.464	PASS	468.1	allow_tf32=True - slower on Orin, reverted
+9	exp9-k64-w8	gemm	4.118	19193	49.3	1.081	PASS	468.1	BLOCK_K=64 + warps=8 - much worse, SMEM overflow, reverted
+10	exp10-l2swizzle	gemm	5.572	14186	66.7	1.459	PASS	468.1	L2 swizzle GROUP_SIZE_M=8 - slightly worse, Orin 2MB L2, reverted
+11	exp11-n256	gemm	0.218	363374	2.6	0.057	PASS	468.1	BLOCK_N=256 register spill - catastrophic, reverted
+B-1	gemm4-baseline	gemm	2.616	51.30	141.1	1.117	FAIL	468.1	kernel_gemm_4 baseline - memory_bound 141% BW
+B-2	gemm4-blkk64	gemm	2.490	53.90	134.3	1.071	PASS	468.1	correctness fix: K>64 dispatch + BLOCK_K=64 single iter
+B-3	gemm4-blk128	gemm	2.488	53.95	134.2	1.062	PASS	468.1	BLOCK 128x128 - neutral vs B-2, reverted (L2-bound kernel)
+C-1	softmax5-baseline	softmax	0.075	1116	0.9	3.370	FAIL	468.1	softmax5 baseline: 3.37x vs PyTorch primary, FAIL=vocab NVML crash (Orin hw bug)
+C-2	softmax5-dispatch-fp16	softmax	0.075	1123	0.9	3.352	FAIL	1041	dispatch: float16 [512,4096] Triton, else PyTorch
+C-11	softmax5-final	softmax	0.074	1136	0.9	3.313	FAIL	1041	final: float16 [256,8192] single-load + loop>8192; vocab FAIL=Orin NVML hw bug
+D-1	softmax6-optimized	softmax	0.073	1155	0.9	3.072	FAIL	1041	softmax6: same 4096x4096 shape, apply softmax5 optimizations directly
+E-1	gemm11-blk128	gemm	7.326	659	87.6	0.772	FAIL	468	BLOCK 128x128x64: 87.6% compute peak but still 0.77x vs cuBLAS
+E-3	gemm11-cublas	gemm	10.357	467	123.9	0.959	PASS	468	dispatch all to cuBLAS: PASS, ~1.0x (cuBLAS already optimal for M=1024 N=768 K=3072)

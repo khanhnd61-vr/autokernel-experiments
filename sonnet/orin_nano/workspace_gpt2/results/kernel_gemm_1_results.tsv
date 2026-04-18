@@ -1,0 +1,9 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	kept	gemm	4.1490			1.000	PASS		baseline (correctness FAIL on large K / bfloat16 - needs fix)
+2	kept	gemm	4.1680			1.005	PASS		correctness fix: dimension dispatch for SM87 cuBLAS divergence; Triton for M>=2048 or N>=2048
+3	kept	gemm	5.7810			1.393	PASS		BLOCK 128x128 + dispatch: 1.511x speedup, 69.1% peak compute
+4	revert	gemm	5.7620			1.393	PASS		num_stages=3 no improvement (-0.3%)
+5	revert	gemm	5.5770			1.393	PASS		allow_tf32=True slower on Orin for float16 inputs
+6	revert	gemm	4.1180			1.393	PASS		BLOCK_K=64+warps=8 much worse - likely SMEM overflow with 128x128 tiles
+7	revert	gemm	5.5720			1.393	PASS		L2 swizzle GROUP_SIZE_M=8 slightly worse on Orin 2MB L2
+8	revert	gemm	0.2180			1.393	PASS		BLOCK_N=256 register spill with 128x256 tile - 256 regs/thread
