@@ -1,0 +1,47 @@
+{
+  "model": "ViT",
+  "input_shape": "1,3,224,224",
+  "dtype": "float32",
+  "gpu": "Orin",
+  "reference": {
+    "output_shape": "[1, 1000]",
+    "latency_ms": 41.55
+  },
+  "optimized": {
+    "output_shape": "[1, 1000]",
+    "latency_ms": 62.16,
+    "kernels_replaced": [
+      {
+        "type": "gemm",
+        "rank": 1,
+        "speedup": 1.498,
+        "path": "/home/khanh/work/vla-opt-kernel/workspace/kernel_gemm_1_optimized.py"
+      },
+      {
+        "type": "gemm",
+        "rank": 2,
+        "speedup": 1.2,
+        "path": "/home/khanh/work/vla-opt-kernel/workspace/kernel_gemm_2_optimized.py"
+      },
+      {
+        "type": "gemm",
+        "rank": 3,
+        "speedup": 1.4,
+        "path": "/home/khanh/work/vla-opt-kernel/workspace/kernel_gemm_3_optimized.py"
+      }
+    ]
+  },
+  "verification": {
+    "correctness": "PASS",
+    "max_abs_error": 5.364418029785156e-07,
+    "mean_abs_error": 1.0333210553881145e-07,
+    "has_nan": false,
+    "has_inf": false
+  },
+  "summary": {
+    "original_latency_ms": 41.55,
+    "optimized_latency_ms": 62.16,
+    "end_to_end_speedup": 0.669,
+    "kernels_replaced": 3
+  }
+}

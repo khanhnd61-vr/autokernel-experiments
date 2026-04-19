@@ -1,0 +1,32 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+0	baseline	gemm	6.415	251.07	76.7	0.643	FAIL	468.1	baseline BM=64 BN=64 BK=32 allow_tf32=False
+1	exp1-tf32	gemm	5.330	302.18	63.8	0.534	FAIL	468.1	allow_tf32=True: worse, reverted
+2	exp2-big-tile	gemm	5.209	309.19	62.3	0.557	FAIL	468.1	BM=128 BN=64 BK=64: worse, reverted
+3	exp3-pipeline	gemm	4.376	368.03	52.3	0.439	FAIL	468.1	num_warps=4 num_stages=2: worse, reverted
+4	exp4-autotune	gemm	6.588	244.49	78.8	0.662	FAIL	468.1	autotune: +2.7% but timeout on large shapes, reverted; winner=BK64 num_stages=3
+5	exp5-winner-fixed	gemm	4.565	352.83	54.6	0.498	FAIL	468.1	BK=64 num_stages=3 hardcoded: worse (occupancy loss), reverted
+6	exp6-bk64-no-pipe	gemm	5.834	276.08	69.8	0.591	FAIL	468.1	BK=64 no pipeline: still worse than BK=32, reverted
+--- kernel_gemm_2 (rank 2, M=512 N=768 K=2048) ---
+7	g2-baseline	gemm	6.134	262.59	73.4	0.899	FAIL	468.1	gemm_2 baseline BM=64 BN=64 BK=32
+8	exp8-fast-path	gemm	4.369	368.65	52.3	0.653	FAIL	468.1	fast unmasked path for interior tiles: Triton predicated loads faster, reverted
+9	exp9-cuda-wmma	gemm	1.370	1175.68	16.4	0.201	FAIL	468.1	CUDA C++ wmma 128x128 tiles: non-coalesced global loads → 5x worse, reverted
+10	exp10-bn128	gemm	5.415	297.45	64.8	0.899	FAIL	468.1	BN=128 wider N tile: same speedup, fewer blocks → worse, reverted
+--- kernel_gemm_2 DONE: baseline 6.134 TFLOPS (0.899x PyTorch), no improvement found ---
+--- kernel_gemm_3 (rank 3, M=512 N=32000 K=768) ---
+11	g3-baseline	gemm	6.160	4085.57	73.7	0.931	FAIL	468.1	gemm_3 baseline BM=64 BN=64 BK=32
+12	exp11-bn128	gemm	7.409	3396.46	88.6	1.181	FAIL	468.1	BN=128: +20.3% BEATS PyTorch 1.181x
+13	exp12-bn256	gemm	7.562	3325.00	90.5	1.322	FAIL	468.1	BN=256: +32.2% BEATS PyTorch 1.322x, KEPT WINNER
+14	exp13-bm128-bn256	gemm	1.383	18202.60	16.5	0.207	FAIL	468.1	BM=128 BN=256: register spill, reverted
+--- kernel_gemm_3 DONE: best BN=256 → 7.562 TFLOPS (1.322x PyTorch) ---
+--- kernel_gemm_4 (rank 4, M=512 N=768 K=768) ---
+15	g4-baseline	gemm	5.663	106.66	67.7	0.776	FAIL	468.1	gemm_4 baseline BM=64 BN=64 BK=32
+16	exp14-bn128	gemm	6.005	100.58	71.8	0.826	FAIL	468.1	BN=128: +6.1% improvement, 0.826x PyTorch
+17	exp15-bn128-bk64	gemm	4.260	141.80	51.0	0.723	FAIL	468.1	BN=128 BK=64: smem pressure, worse, reverted
+18	exp16-bk64	gemm	5.600	107.86	67.0	0.771	FAIL	468.1	BK=64 BN=64: no improvement, reverted
+19	exp17-bn128-nw8	gemm	4.628	130.50	55.4	0.642	FAIL	468.1	BN=128 num_warps=8: reg pressure, worse, reverted
+--- kernel_gemm_4 DONE: best BN=128 → 6.005 TFLOPS (0.826x PyTorch) ---
+--- kernel_gemm_7 (rank 5, M=512 N=256 K=768) ---
+20	g7-baseline	gemm	4.312	46.69	51.6	1.069	FAIL	468.1	gemm_7 baseline BM=64 BN=64 BK=32 (already beats PyTorch)
+21	exp18-bk64	gemm	4.383	45.93	52.4	1.077	FAIL	468.1	BK=64: +1.6% improvement, 1.077x PyTorch, KEPT
+22	exp19-bk128	gemm	3.882	51.86	46.4	0.960	FAIL	468.1	BK=128: smem pressure, reverted
+--- kernel_gemm_7 DONE: best BK=64 → 4.383 TFLOPS (1.077x PyTorch) ---

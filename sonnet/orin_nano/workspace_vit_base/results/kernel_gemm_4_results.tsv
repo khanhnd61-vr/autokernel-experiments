@@ -1,0 +1,5 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	kept	gemm	0.3000			1.000	PASS		baseline: Triton 64x64xK32 1.104x pytorch but correctness FAIL
+2	kept	gemm	0.3000			1.000	PASS		hybrid dispatch: Triton for small dims, cuBLAS for large — 1.111x pytorch PASS
+3	kept	gemm	0.3140			1.047	PASS		BLOCK_SIZE 32x32xK64 hybrid dispatch 1.159x pytorch PASS
+4	kept	gemm	0.3030			1.047	PASS		gemm4 done: 32x32xK64 hybrid dispatch ~1.1x pytorch

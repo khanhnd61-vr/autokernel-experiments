@@ -1,0 +1,33 @@
+{
+  "num_devices": 1,
+  "devices": [
+    {
+      "index": 0,
+      "name": "Orin",
+      "memory_clock_rate_mhz": 996,
+      "peak_bandwidth_gb_s": 32.6,
+      "concurrent_kernels": true,
+      "device_overlap": true,
+      "compute_capability": [8, 7],
+      "architecture": "Ampere (Orin)",
+      "tensor_cores": true,
+      "sm_clock_rate_mhz": 1020,
+      "peak_tflops_fp16": 8.36,
+      "peak_tflops_bf16": 8.36,
+      "peak_tflops_fp32": 2.09,
+      "warp_size": 32,
+      "sm_count": 8,
+      "max_threads_per_sm": 1536,
+      "max_threads_per_block": 1024,
+      "max_blocks_per_sm": 16,
+      "max_grid_size": [2147483647, 65535, 65535],
+      "max_threads_dim": [1024, 1024, 64],
+      "memory_gb": 7.4,
+      "shared_memory_per_block_bytes": 49152,
+      "shared_memory_per_sm_bytes": 167936,
+      "l2_cache_mb": 2.0,
+      "regs_per_block": 65536,
+      "regs_per_sm": 65536
+    }
+  ]
+}

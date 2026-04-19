@@ -1,0 +1,12 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	kept	gemm	4.5080			1.000	PASS		baseline: BLOCK_SIZE_M=64,N=64,K=32 no tf32
+2	kept	gemm	7.5090			1.666	PASS		128x128 tiles: 66% speedup, 89.8% peak
+3	revert	gemm	5.9560			1.666	PASS		allow_tf32=True: worse perf and correctness
+4	revert	gemm	7.4790			1.666	PASS		num_stages=3: no improvement on Orin integrated memory
+5	kept	gemm	7.7980			1.730	PASS		BLOCK_SIZE_K=64: +3.9%, 93.3% peak
+6	kept	gemm	8.7440			1.940	PASS		L2 swizzle GROUP_SIZE_M=8: +12%, 104.6% peak
+7	revert	gemm	8.7010			1.940	PASS		num_warps=4: no improvement
+8	revert	gemm	6.4390			1.940	PASS		num_warps=8: register pressure hurt perf
+9	revert	gemm	7.5070			1.940	PASS		64x256 rect tile: worse than 128x128
+10	revert	gemm	8.5070			1.940	PASS		GROUP_SIZE_M=4: slightly worse
+11	revert	gemm	6.3130			1.940	PASS		num_stages=2: worse on Orin

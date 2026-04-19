@@ -1,0 +1,82 @@
+{
+  "current_kernel_idx": 4,
+  "current_kernel_file": "workspace/kernel_fused_mlp_5.py",
+  "started_at": "2026-04-18T08:13:59",
+  "kernels": [
+    {
+      "rank": 1,
+      "file": "workspace/kernel_gemm_1.py",
+      "op_type": "gemm",
+      "pct_total": 21.6,
+      "status": "done",
+      "baseline_tflops": 4.508,
+      "best_tflops": 8.744,
+      "speedup": 1.94,
+      "pct_peak": null,
+      "experiments_run": 11,
+      "experiments_kept": 4,
+      "consecutive_reverts": 5,
+      "time_spent_minutes": 42
+    },
+    {
+      "rank": 2,
+      "file": "workspace/kernel_gemm_2.py",
+      "op_type": "gemm",
+      "pct_total": 18.0,
+      "status": "done",
+      "baseline_tflops": 4.567,
+      "best_tflops": 9.095,
+      "speedup": 1.991,
+      "pct_peak": null,
+      "experiments_run": 14,
+      "experiments_kept": 4,
+      "consecutive_reverts": 5,
+      "time_spent_minutes": 115
+    },
+    {
+      "rank": 3,
+      "file": "workspace/kernel_gemm_3.py",
+      "op_type": "gemm",
+      "pct_total": 16.6,
+      "status": "done",
+      "baseline_tflops": 4.47,
+      "best_tflops": 9.954,
+      "speedup": 2.227,
+      "pct_peak": 119.1,
+      "experiments_run": 9,
+      "experiments_kept": 3,
+      "consecutive_reverts": 5,
+      "time_spent_minutes": 135
+    },
+    {
+      "rank": 4,
+      "file": "workspace/kernel_fused_mlp_4.py",
+      "op_type": "fused_mlp",
+      "pct_total": 7.4,
+      "status": "done",
+      "baseline_tflops": 0.492,
+      "best_tflops": 0.533,
+      "speedup": 1.083,
+      "pct_peak": 6.4,
+      "experiments_run": 8,
+      "experiments_kept": 3,
+      "consecutive_reverts": 5,
+      "time_spent_minutes": 25
+    },
+    {
+      "rank": 5,
+      "file": "workspace/kernel_fused_mlp_5.py",
+      "op_type": "fused_mlp",
+      "pct_total": 7.4,
+      "status": "done",
+      "baseline_tflops": 6.797,
+      "best_tflops": 8.345,
+      "speedup": 1.228,
+      "pct_peak": 99.8,
+      "experiments_run": 10,
+      "experiments_kept": 4,
+      "consecutive_reverts": 5,
+      "time_spent_minutes": 35
+    }
+  ]
+}

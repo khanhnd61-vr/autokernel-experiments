@@ -1,0 +1,54 @@
+Loading GPU specs...
+  Use the first GPU only: Orin
+
+Loading model...
+BertModel: 109.5M parameters
+  Model: BertModel from models/bert_base.py
+  Input: shape=[8, 512], dtype=float16
+
+Preparing model and input...
+Profiling... (5 warmup + 10 measured iterations)
+
+============================================================
+  AutoKernel Profiler
+============================================================
+  Model: BertModel from models/bert_base.py
+  Input: shape=[8, 512], dtype=float16
+  GPU:   Orin
+  Total GPU time: 1308.835 ms (24 kernels, 10 iterations)
+
+============================================================
+  KERNEL RANKING (by GPU time)
+============================================================
+Rank | Op Type              | GPU Time (ms) | Calls |    Pct |  Cumul | Supported
+---------------------------------------------------------------------------------
+   1 | gemm                 |       283.192 |   120 |  21.6% |  21.6% | YES
+   2 | gemm                 |       235.259 |   120 |  18.0% |  39.6% | YES
+   3 | gemm                 |       217.445 |   480 |  16.6% |  56.2% | YES
+   4 | fused_mlp            |        96.542 |   120 |   7.4% |  63.6% | YES
+   5 | fused_mlp            |        96.542 |   120 |   7.4% |  71.0% | YES
+   6 | flash_attention      |        88.737 |   120 |   6.8% |  77.8% | YES
+   7 | layernorm            |        79.550 |   250 |   6.1% |  83.8% | YES
+   8 | layernorm            |        79.550 |   250 |   6.1% |  89.9% | YES
+   9 | other                |        50.017 |   250 |   3.8% |  93.7% | no
+  10 | other                |        50.017 |   250 |   3.8% |  97.6% | no
+  11 | other                |        12.588 |    30 |   1.0% |  98.5% | no
+  12 | other                |         6.565 |    10 |   0.5% |  99.0% | no
+  13 | other                |         5.128 |    10 |   0.4% |  99.4% | no
+  14 | other                |         2.878 |    10 |   0.2% |  99.6% | no
+  15 | other                |         2.878 |    10 |   0.2% |  99.9% | no
+  16 | other                |         0.894 |    10 |   0.1% |  99.9% | no
+  17 | other                |         0.607 |    11 |   0.0% | 100.0% | no
+  18 | gemm                 |         0.247 |    10 |   0.0% | 100.0% | YES
+  19 | other                |         0.050 |    10 |   0.0% | 100.0% | no
+  20 | other                |         0.050 |    10 |   0.0% | 100.0% | no
+  ... (4 more kernels, 0.0% of total)
+
+============================================================
+  OPTIMIZATION PLAN
+============================================================
+  AutoKernel can optimize 89.9% of GPU time (4 kernel types).
+  Top-5 kernels account for 71.0% of total GPU time.
+  Estimated max speedup: 2.5x (Amdahl's law, f=90% supported, 3x per-kernel)
+
+Profile saved to /home/khanh/work/vla-opt-kernel/workspace/profile_report.json

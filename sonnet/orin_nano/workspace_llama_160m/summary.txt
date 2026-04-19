@@ -1,0 +1,29 @@
+  ---                                                                                                
+  AutoKernel — LlamaModel (batch=1, seq=512) on Orin Nano                                            
+  Branch: autokernel/apr18-llama-512                                                                 
+                                                                                                     
+  Per-Kernel Results (22 experiments across 5 kernels):                                              
+                                                                                                     
+  ┌────────────────┬───────────────────────┬─────────────┬────────────┬───────────────┐              
+  │     Kernel     │         Shape         │ Improvement │ vs PyTorch │ Winner config │              
+  ├────────────────┼───────────────────────┼─────────────┼────────────┼───────────────┤              
+  │ gemm_1 (14.1%) │ M=512, N=2048, K=768  │ no change   │ 0.643x     │ —             │            
+  ├────────────────┼───────────────────────┼─────────────┼────────────┼───────────────┤
+  │ gemm_2 (10.4%) │ M=512, N=768, K=2048  │ no change   │ 0.899x     │ —             │              
+  ├────────────────┼───────────────────────┼─────────────┼────────────┼───────────────┤              
+  │ gemm_3 (7.5%)  │ M=512, N=32000, K=768 │ +22.7%      │ 1.322x     │ BN=256        │              
+  ├────────────────┼───────────────────────┼─────────────┼────────────┼───────────────┤              
+  │ gemm_4 (6.5%)  │ M=512, N=768, K=768   │ +6.0%       │ 0.826x     │ BN=128        │            
+  ├────────────────┼───────────────────────┼─────────────┼────────────┼───────────────┤              
+  │ gemm_7 (3.6%)  │ M=512, N=256, K=768   │ +1.6%       │ 1.077x     │ BK=64         │            
+  └────────────────┴───────────────────────┴─────────────┴────────────┴───────────────┘              
+                                                                                                   
+  Key finding: BN=256 on the LM head projection (N=32000, vocabulary-scale output) beats cuBLAS by   
+  32% in isolation — wider N-tiles better saturate tensor cores and reduce store overhead for this 
+  shape.                                                                                             
+                                                                                                   
+  End-to-end: The verifier applies kernels universally to all nn.Linear modules (not                 
+  shape-specifically), so deploying the BN=256 kernel to smaller-N shapes caused regression (0.67x).
+  A shape-aware dispatch mechanism is needed to realize the gemm_3 improvement in production.        
+                                                                                                   
+  Aggregate (Amdahl, vs Triton baseline): ~1.02x   

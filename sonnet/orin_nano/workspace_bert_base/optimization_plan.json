@@ -1,0 +1,71 @@
+{
+    "kernels_to_optimize": [
+        {
+            "rank": 1,
+            "file": "workspace/kernel_gemm_1.py",
+            "op_type": "gemm",
+            "model_shape": {
+                "M": 4096,
+                "N": 3072,
+                "K": 768
+            },
+            "gpu_time_ms": 283.192,
+            "pct_total": 21.6,
+            "estimated_speedup_potential": "2-3x"
+        },
+        {
+            "rank": 2,
+            "file": "workspace/kernel_gemm_2.py",
+            "op_type": "gemm",
+            "model_shape": {
+                "M": 4096,
+                "N": 768,
+                "K": 3072
+            },
+            "gpu_time_ms": 235.259,
+            "pct_total": 18.0,
+            "estimated_speedup_potential": "2-3x"
+        },
+        {
+            "rank": 3,
+            "file": "workspace/kernel_gemm_3.py",
+            "op_type": "gemm",
+            "model_shape": {
+                "M": 4096,
+                "N": 768,
+                "K": 768
+            },
+            "gpu_time_ms": 217.445,
+            "pct_total": 16.6,
+            "estimated_speedup_potential": "2-3x"
+        },
+        {
+            "rank": 4,
+            "file": "workspace/kernel_fused_mlp_4.py",
+            "op_type": "fused_mlp",
+            "model_shape": {
+                "batch": 8,
+                "dim": 512,
+                "hidden": 3072
+            },
+            "gpu_time_ms": 96.542,
+            "pct_total": 7.4,
+            "estimated_speedup_potential": "2-3x"
+        },
+        {
+            "rank": 5,
+            "file": "workspace/kernel_fused_mlp_5.py",
+            "op_type": "fused_mlp",
+            "model_shape": {
+                "batch": 2048,
+                "dim": 2048,
+                "hidden": 5504
+            },
+            "gpu_time_ms": 96.542,
+            "pct_total": 7.4,
+            "estimated_speedup_potential": "2-3x"
+        }
+    ],
+    "total_optimization_targets": 5,
+    "covered_gpu_time_pct": 71.0
+}

@@ -1,0 +1,26 @@
+  Phase B Complete — All 5 kernels optimized:                                                        
+                                                                                                     
+  ┌──────┬───────────────────────────────┬──────────────────────────┬────────────┐                   
+  │ Rank │            Kernel             │         Speedup          │ % GPU Time │                   
+  ├──────┼───────────────────────────────┼──────────────────────────┼────────────┤                   
+  │ 1    │ gemm1 (M=4096, N=3072, K=768) │ 1.94x (4.51→8.74 TFLOPS) │ 21.6%      │                   
+  ├──────┼───────────────────────────────┼──────────────────────────┼────────────┤                 
+  │ 2    │ gemm2 (M=4096, N=768, K=3072) │ 1.99x (4.57→9.10 TFLOPS) │ 18.0%      │                   
+  ├──────┼───────────────────────────────┼──────────────────────────┼────────────┤                   
+  │ 3    │ gemm3 (M=4096, N=768, K=768)  │ 2.23x (4.47→9.95 TFLOPS) │ 16.6%      │                   
+  ├──────┼───────────────────────────────┼──────────────────────────┼────────────┤                   
+  │ 4    │ fused_mlp4 (M=8 tiny-batch)   │ 1.08x (0.49→0.53 TFLOPS) │ 7.4%       │                 
+  ├──────┼───────────────────────────────┼──────────────────────────┼────────────┤                   
+  │ 5    │ fused_mlp5 (M=2048, N=5504)   │ 1.23x (6.80→8.35 TFLOPS) │ 7.4%       │                 
+  └──────┴───────────────────────────────┴──────────────────────────┴────────────┘                   
+                                                                                                   
+  Phase C result: Correctness ✅ PASS (max_abs_error=1.9e-6). End-to-end speedup is 0.29x (slower)   
+  due to Triton Python dispatch overhead across BERT's many small kernel calls (480 calls for gemm3
+  alone). The aggregate report estimates 1.44x speedup based on Amdahl's Law from the per-kernel     
+  benchmarks.                                                                                      
+
+  Key learnings: The per-kernel gains (up to 2.23x) don't transfer to end-to-end because cuBLAS      
+  dispatch in PyTorch has much lower overhead than Triton's Python-side kernel launch. For production
+   use, these kernels would benefit from being compiled via torch.compile or called in batch to      
+  amortize dispatch cost.                                                                          
+

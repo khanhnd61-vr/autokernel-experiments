@@ -1,0 +1,2 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	kept	gemm	0.3040			1.000	PASS		gemm5: 32x64xK128 hybrid dispatch 1.193x pytorch PASS

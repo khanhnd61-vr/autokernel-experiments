@@ -1,0 +1,15 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	kept	gemm	4.5670			1.000	PASS		baseline
+2	kept	gemm	7.0100			1.535	PASS		128x128 K64 swizzle: +53%, 0.918x pytorch
+3	revert	gemm	5.9840			1.535	PASS		BLOCK_SIZE_N=64: worse for this shape
+4	revert	gemm	5.9060			1.535	PASS		BLOCK_SIZE_K=128: too much shared mem pressure
+5	kept	gemm	8.5740			1.877	PASS		GROUP_SIZE_M=4: +22%, 1.18x pytorch
+6	revert	gemm	7.2950			1.877	PASS		GROUP_SIZE_M=6: worse
+7	revert	gemm	7.9860			1.877	PASS		GROUP_SIZE_M=2: slightly worse
+8	revert	gemm	6.3120			1.877	PASS		BLOCK_SIZE_M=64: worse, less work per block
+9	kept	gemm	9.0950			1.991	PASS		num_warps=4: +6%, 0.995x pytorch
+10	revert	gemm	0			1.991	PASS		num_warps=5: Triton requires power of 2
+11	revert	gemm	8.0610			1.991	PASS		BLOCK_SIZE_K=32: worse
+12	revert	gemm	0.5600			1.991	PASS		num_warps=1: TIMEOUT/catastrophic regression
+13	revert	gemm	1.1060			1.991	PASS		num_warps=2: bad tl.dot coverage
+14	revert	gemm	8.4390			1.991	PASS		GROUP_SIZE_M=8: slightly worse

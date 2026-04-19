@@ -1,0 +1,59 @@
+{
+  "model": "BertModel",
+  "input_shape": "8,512",
+  "dtype": "float16",
+  "gpu": "Orin",
+  "reference": {
+    "output_shape": "[8, 768]",
+    "latency_ms": 637.89
+  },
+  "optimized": {
+    "output_shape": "[8, 768]",
+    "latency_ms": 2227.5,
+    "kernels_replaced": [
+      {
+        "type": "gemm",
+        "rank": 1,
+        "speedup": 1.94,
+        "path": "/home/khanh/work/vla-opt-kernel/workspace/kernel_gemm_1_optimized.py"
+      },
+      {
+        "type": "gemm",
+        "rank": 2,
+        "speedup": 1.991,
+        "path": "/home/khanh/work/vla-opt-kernel/workspace/kernel_gemm_2_optimized.py"
+      },
+      {
+        "type": "gemm",
+        "rank": 3,
+        "speedup": 2.227,
+        "path": "/home/khanh/work/vla-opt-kernel/workspace/kernel_gemm_3_optimized.py"
+      },
+      {
+        "type": "fused_mlp",
+        "rank": 4,
+        "speedup": 1.083,
+        "path": "/home/khanh/work/vla-opt-kernel/workspace/kernel_fused_mlp_4_optimized.py"
+      },
+      {
+        "type": "fused_mlp",
+        "rank": 5,
+        "speedup": 1.228,
+        "path": "/home/khanh/work/vla-opt-kernel/workspace/kernel_fused_mlp_5_optimized.py"
+      }
+    ]
+  },
+  "verification": {
+    "correctness": "PASS",
+    "max_abs_error": 1.9101426005363464e-06,
+    "mean_abs_error": 3.059505218061531e-07,
+    "has_nan": false,
+    "has_inf": false
+  },
+  "summary": {
+    "original_latency_ms": 637.89,
+    "optimized_latency_ms": 2227.5,
+    "end_to_end_speedup": 0.286,
+    "kernels_replaced": 5
+  }
+}

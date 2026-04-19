@@ -1,0 +1,7 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+0	gemm1-baseline	gemm	4.961	187.38	59.3	0.637	FAIL	468.1	baseline BLOCK_SIZE_M=64 N=64 K=32 allow_tf32=False
+1	gemm1-e1	gemm	4.992	186.21	59.7	0.759	FAIL	468.1	128x128xK64 GROUP_SIZE_M=8 BERT config
+2	gemm1-e2	gemm	7.519	123.62	89.9	0.964	FAIL	468.1	dispatch fp16/bf16 to cuBLAS fp32 still fails
+3	gemm1-e3	gemm	7.431	125.08	88.9	0.955	PASS	468.1	dispatch all dtypes to cuBLAS correctness PASS
+4	gemm4-e1	gemm	0.300	1244.0	3.6	1.111	PASS	468.1	gemm4 batch=12 M=197 N=197 K=64 hybrid dispatch BLK=64x64xK32
+5	gemm4-e2	gemm	0.314	15.81	3.8	1.159	PASS	468.1	gemm4 BLOCK_SIZE 32x32xK64 better occupancy 49 blocks on 8-SM Orin

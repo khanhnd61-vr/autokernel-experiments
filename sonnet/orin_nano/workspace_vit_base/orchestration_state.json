@@ -1,0 +1,82 @@
+{
+  "current_kernel_idx": 4,
+  "current_kernel_file": "workspace/kernel_gemm_5.py",
+  "started_at": "2026-04-18T18:51:29",
+  "kernels": [
+    {
+      "rank": 1,
+      "file": "workspace/kernel_gemm_1.py",
+      "op_type": "gemm",
+      "pct_total": 17.3,
+      "status": "done",
+      "baseline_tflops": 4.961,
+      "best_tflops": 7.431,
+      "speedup": 1.498,
+      "pct_peak": null,
+      "experiments_run": 2,
+      "experiments_kept": 2,
+      "consecutive_reverts": 0,
+      "time_spent_minutes": 625
+    },
+    {
+      "rank": 2,
+      "file": "workspace/kernel_gemm_2.py",
+      "op_type": "gemm",
+      "pct_total": 13.9,
+      "status": "done",
+      "baseline_tflops": 4.813,
+      "best_tflops": 5.776,
+      "speedup": 1.2,
+      "pct_peak": null,
+      "experiments_run": 2,
+      "experiments_kept": 2,
+      "consecutive_reverts": 0,
+      "time_spent_minutes": 635
+    },
+    {
+      "rank": 3,
+      "file": "workspace/kernel_gemm_3.py",
+      "op_type": "gemm",
+      "pct_total": 12.0,
+      "status": "done",
+      "baseline_tflops": 4.686,
+      "best_tflops": 6.559,
+      "speedup": 1.4,
+      "pct_peak": null,
+      "experiments_run": 2,
+      "experiments_kept": 2,
+      "consecutive_reverts": 0,
+      "time_spent_minutes": 640
+    },
+    {
+      "rank": 4,
+      "file": "workspace/kernel_gemm_4.py",
+      "op_type": "gemm",
+      "pct_total": 8.8,
+      "status": "done",
+      "baseline_tflops": 0.3,
+      "best_tflops": 0.314,
+      "speedup": 1.047,
+      "pct_peak": null,
+      "experiments_run": 4,
+      "experiments_kept": 4,
+      "consecutive_reverts": 0,
+      "time_spent_minutes": 671
+    },
+    {
+      "rank": 5,
+      "file": "workspace/kernel_gemm_5.py",
+      "op_type": "gemm",
+      "pct_total": 5.1,
+      "status": "optimizing",
+      "baseline_tflops": 0.304,
+      "best_tflops": 0.304,
+      "speedup": 1.0,
+      "pct_peak": null,
+      "experiments_run": 1,
+      "experiments_kept": 1,
+      "consecutive_reverts": 0,
+      "time_spent_minutes": 677
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	kept	gemm	4.4700			1.000	PASS		baseline
+2	kept	gemm	9.6550			2.160	PASS		gemm2 combo: +116%, 0.811x pytorch
+3	kept	gemm	9.9540			2.227	PASS		GROUP_SIZE_M=8: +3.1%, 0.860x pytorch
+4	revert	gemm	5.7640			2.227	PASS		GROUP_SIZE_M=16: worse

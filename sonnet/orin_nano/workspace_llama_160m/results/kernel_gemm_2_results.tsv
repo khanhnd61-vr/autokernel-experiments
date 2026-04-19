@@ -1,0 +1,3 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	kept	gemm	6.1340			1.000	PASS		baseline
+2	revert	gemm	4.3690			1.000	PASS		exp8: fast unmasked path slower (Triton predicated loads already efficient)

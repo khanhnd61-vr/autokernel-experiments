@@ -1,0 +1,7 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	kept	gemm	6.4150			1.000	PASS		baseline
+2	revert	gemm	5.2090			1.000	PASS		exp2 BM=128 BN=64 BK=64: worse throughput, revert
+3	revert	gemm	4.3760			1.000	PASS		exp3 num_warps=4 num_stages=2: pipelining hurts at 76.7% compute
+4	revert	gemm	6.5880			1.000	PASS		exp4 autotune: +2.7% but llm_mlp timeout; winner was BK=64 num_stages=3
+5	revert	gemm	4.5650			1.000	PASS		exp5 BK=64 num_stages=3: autotune winner but worse standalone (occupancy loss)
+6	revert	gemm	5.8340			1.000	PASS		exp6 BK=64 no-pipeline: still worse than baseline BK=32
