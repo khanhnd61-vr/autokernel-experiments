@@ -1,0 +1,7 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	kept	gemm	51.8660			1.000	PASS		baseline gemm_3
+2	revert	gemm	38.5970			1.000	PASS		M=128 N=128 stages=4
+3	revert	gemm	21.0130			1.000	PASS		K=64
+4	revert	gemm	33.4850			1.000	PASS		M=32 N=128
+5	revert	gemm	33.9320			1.000	PASS		M=128 N=64
+6	revert	gemm	10.0000			1.000	PASS		Force next kernel

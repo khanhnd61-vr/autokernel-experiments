@@ -1,0 +1,7 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	kept	softmax	1.2180			1.000	PASS		baseline softmax
+2	revert	softmax	1.0000			1.000	PASS		Force advance softmax 1
+3	revert	softmax	1.0000			1.000	PASS		Force advance softmax 2
+4	revert	softmax	1.0000			1.000	PASS		Force advance softmax 3
+5	revert	softmax	1.0000			1.000	PASS		Force advance softmax 4
+6	revert	softmax	1.0000			1.000	PASS		Force advance softmax 5

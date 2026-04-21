@@ -1,0 +1,69 @@
+{
+    "kernels_to_optimize": [
+        {
+            "rank": 1,
+            "file": "workspace/kernel_gemm_1.py",
+            "op_type": "gemm",
+            "model_shape": {
+                "M": 1024,
+                "N": 50257,
+                "K": 768
+            },
+            "gpu_time_ms": 19.31,
+            "pct_total": 13.1,
+            "estimated_speedup_potential": "2-3x"
+        },
+        {
+            "rank": 2,
+            "file": "workspace/kernel_gemm_2.py",
+            "op_type": "gemm",
+            "model_shape": {
+                "M": 1024,
+                "N": 768,
+                "K": 3072
+            },
+            "gpu_time_ms": 11.196,
+            "pct_total": 7.6,
+            "estimated_speedup_potential": "2-3x"
+        },
+        {
+            "rank": 3,
+            "file": "workspace/kernel_gemm_3.py",
+            "op_type": "gemm",
+            "model_shape": {
+                "M": 1024,
+                "N": 3072,
+                "K": 768
+            },
+            "gpu_time_ms": 10.77,
+            "pct_total": 7.3,
+            "estimated_speedup_potential": "2-3x"
+        },
+        {
+            "rank": 4,
+            "file": "workspace/kernel_softmax_4.py",
+            "op_type": "softmax",
+            "model_shape": {
+                "rows": 4096,
+                "cols": 4096
+            },
+            "gpu_time_ms": 10.27,
+            "pct_total": 6.9,
+            "estimated_speedup_potential": "1.5-3x"
+        },
+        {
+            "rank": 5,
+            "file": "workspace/kernel_softmax_5.py",
+            "op_type": "softmax",
+            "model_shape": {
+                "rows": 4096,
+                "cols": 4096
+            },
+            "gpu_time_ms": 10.27,
+            "pct_total": 6.9,
+            "estimated_speedup_potential": "1.5-3x"
+        }
+    ],
+    "total_optimization_targets": 5,
+    "covered_gpu_time_pct": 41.8
+}

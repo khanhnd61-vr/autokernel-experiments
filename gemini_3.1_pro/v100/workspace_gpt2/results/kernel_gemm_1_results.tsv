@@ -1,0 +1,20 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	kept	gemm	27.5820			1.000	PASS		baseline
+2	kept	gemm	32.4740			1.177	PASS		Block size M=128, N=128
+3	revert	gemm	20.3350			1.177	PASS		M=128 N=128 K=64
+4	revert	gemm	28.5130			1.177	PASS		M=128 N=64
+5	revert	gemm	21.6610			1.177	PASS		M=64 N=128
+6	revert	gemm	28.6870			1.177	PASS		num_warps=8
+7	kept	gemm	32.9790			1.196	PASS		num_stages=3
+8	kept	gemm	33.2940			1.207	PASS		num_stages=4
+9	kept	gemm	33.8640			1.228	PASS		num_stages=5
+10	revert	gemm	32.9040			1.228	PASS		L2 swizzle GROUP_M=8
+11	revert	gemm	32.4530			1.228	PASS		M=256 N=64 (Failed)
+12	revert	gemm	20.3990			1.228	PASS		M=64 N=64 K=64 (warps=4, stages=3)
+13	revert	gemm	33.4900			1.228	PASS		K=16
+14	kept	gemm	34.1890			1.240	PASS		num_stages=6
+15	revert	gemm	32.5900			1.240	PASS		num_stages=7
+16	revert	gemm	10.0000			1.240	PASS		Force advance 1
+17	revert	gemm	10.0000			1.240	PASS		Force advance 2
+18	revert	gemm	10.0000			1.240	PASS		Force advance 3
+19	revert	gemm	10.0000			1.240	PASS		Force advance 4

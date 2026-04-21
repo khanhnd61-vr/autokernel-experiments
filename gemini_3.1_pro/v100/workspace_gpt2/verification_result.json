@@ -1,0 +1,35 @@
+{
+  "model": "GPT2",
+  "input_shape": "1,1024",
+  "dtype": "float16",
+  "gpu": "Tesla V100S-PCIE-32GB",
+  "reference": {
+    "output_shape": "[1, 1024, 50257]",
+    "latency_ms": 67.2
+  },
+  "optimized": {
+    "output_shape": "[1, 1024, 50257]",
+    "latency_ms": 108.87,
+    "kernels_replaced": [
+      {
+        "type": "gemm",
+        "rank": 1,
+        "speedup": 1.24,
+        "path": "/home/hieuvt/vla-opt-kernel/workspace/kernel_gemm_1_optimized.py"
+      }
+    ]
+  },
+  "verification": {
+    "correctness": "PASS",
+    "max_abs_error": 4.5299530029296875e-06,
+    "mean_abs_error": 4.450681103662646e-07,
+    "has_nan": false,
+    "has_inf": false
+  },
+  "summary": {
+    "original_latency_ms": 67.2,
+    "optimized_latency_ms": 108.87,
+    "end_to_end_speedup": 0.617,
+    "kernels_replaced": 1
+  }
+}
