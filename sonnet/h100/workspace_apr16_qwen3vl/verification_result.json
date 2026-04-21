@@ -1,0 +1,59 @@
+{
+  "model": "Qwen3VLModel",
+  "input_shape": "1,512",
+  "dtype": "float16",
+  "gpu": "NVIDIA H100 80GB HBM3",
+  "reference": {
+    "output_shape": "[1, 512, 151936]",
+    "latency_ms": 2.9
+  },
+  "optimized": {
+    "output_shape": "[1, 512, 151936]",
+    "latency_ms": 15.12,
+    "kernels_replaced": [
+      {
+        "type": "matmul",
+        "rank": 1,
+        "speedup": 1.86,
+        "path": "/mnt/data/sftp/data/hunght23/workspace/projects/autokernel/workspace/kernel_matmul_1_optimized.py"
+      },
+      {
+        "type": "matmul",
+        "rank": 3,
+        "speedup": 1.87,
+        "path": "/mnt/data/sftp/data/hunght23/workspace/projects/autokernel/workspace/kernel_matmul_3_optimized.py"
+      },
+      {
+        "type": "matmul",
+        "rank": 6,
+        "speedup": 1.87,
+        "path": "/mnt/data/sftp/data/hunght23/workspace/projects/autokernel/workspace/kernel_matmul_6_optimized.py"
+      },
+      {
+        "type": "matmul",
+        "rank": 7,
+        "speedup": 1.88,
+        "path": "/mnt/data/sftp/data/hunght23/workspace/projects/autokernel/workspace/kernel_matmul_7_optimized.py"
+      },
+      {
+        "type": "matmul",
+        "rank": 9,
+        "speedup": 1.85,
+        "path": "/mnt/data/sftp/data/hunght23/workspace/projects/autokernel/workspace/kernel_matmul_9_optimized.py"
+      }
+    ]
+  },
+  "verification": {
+    "correctness": "PASS",
+    "max_abs_error": 0.0,
+    "mean_abs_error": 0.0,
+    "has_nan": false,
+    "has_inf": false
+  },
+  "summary": {
+    "original_latency_ms": 2.9,
+    "optimized_latency_ms": 15.12,
+    "end_to_end_speedup": 0.192,
+    "kernels_replaced": 5
+  }
+}

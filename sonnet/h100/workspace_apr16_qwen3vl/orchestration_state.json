@@ -1,0 +1,72 @@
+{
+  "current_kernel_idx": 5,
+  "current_kernel_file": null,
+  "started_at": "2026-04-16T12:00:00",
+  "kernels": [
+    {
+      "rank": 1,
+      "file": "workspace/kernel_matmul_1.py",
+      "op_type": "matmul",
+      "pct_total": 16.1,
+      "status": "plateau",
+      "baseline_tflops": 282.6,
+      "best_tflops": 524.4,
+      "speedup": 1.86,
+      "experiments_run": 6,
+      "experiments_kept": 1,
+      "consecutive_reverts": 5
+    },
+    {
+      "rank": 3,
+      "file": "workspace/kernel_matmul_3.py",
+      "op_type": "matmul",
+      "pct_total": 11.1,
+      "status": "plateau",
+      "baseline_tflops": 282.4,
+      "best_tflops": 526.8,
+      "speedup": 1.87,
+      "experiments_run": 7,
+      "experiments_kept": 2,
+      "consecutive_reverts": 5
+    },
+    {
+      "rank": 6,
+      "file": "workspace/kernel_matmul_6.py",
+      "op_type": "matmul",
+      "pct_total": 5.3,
+      "status": "optimized",
+      "baseline_tflops": 282.3,
+      "best_tflops": 528.8,
+      "speedup": 1.87,
+      "experiments_run": 1,
+      "experiments_kept": 1,
+      "consecutive_reverts": 0
+    },
+    {
+      "rank": 7,
+      "file": "workspace/kernel_matmul_7.py",
+      "op_type": "matmul",
+      "pct_total": 4.2,
+      "status": "optimized",
+      "baseline_tflops": 282.3,
+      "best_tflops": 529.7,
+      "speedup": 1.88,
+      "experiments_run": 1,
+      "experiments_kept": 1,
+      "consecutive_reverts": 0
+    },
+    {
+      "rank": 9,
+      "file": "workspace/kernel_matmul_9.py",
+      "op_type": "matmul",
+      "pct_total": 1.8,
+      "status": "optimized",
+      "baseline_tflops": 282.3,
+      "best_tflops": 523.5,
+      "speedup": 1.85,
+      "experiments_run": 1,
+      "experiments_kept": 1,
+      "consecutive_reverts": 0
+    }
+  ]
+}
