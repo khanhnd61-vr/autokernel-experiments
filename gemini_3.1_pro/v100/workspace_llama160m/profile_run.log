@@ -1,0 +1,56 @@
+/home/hieuvt/vla-opt-kernel/.venv/lib/python3.10/site-packages/torch/nn/modules/module.py:1326: UserWarning: Casting complex values to real discards the imaginary part (Triggered internally at ../aten/src/ATen/native/Copy.cpp:308.)
+  return t.to(
+Loading GPU specs...
+  Use the first GPU only: Tesla V100S-PCIE-32GB
+
+Loading model...
+LlamaModel: 124.7M parameters
+  Model: LlamaModel from models/llama_7b.py
+  Input: shape=[1, 1024], dtype=float16
+
+Preparing model and input...
+Profiling... (5 warmup + 10 measured iterations)
+
+============================================================
+  AutoKernel Profiler
+============================================================
+  Model: LlamaModel from models/llama_7b.py
+  Input: shape=[1, 1024], dtype=float16
+  GPU:   Tesla V100S-PCIE-32GB
+  Total GPU time: 106.750 ms (34 kernels, 10 iterations)
+
+============================================================
+  KERNEL RANKING (by GPU time)
+============================================================
+Rank | Op Type              | GPU Time (ms) | Calls |    Pct |  Cumul | Supported
+---------------------------------------------------------------------------------
+   1 | flash_attention      |        18.802 |   120 |  17.6% |  17.6% | YES
+   2 | gemm                 |        14.529 |   240 |  13.6% |  31.2% | YES
+   3 | gemm                 |        10.061 |   120 |   9.4% |  40.6% | YES
+   4 | gemm                 |         8.237 |   240 |   7.7% |  48.4% | YES
+   5 | gemm                 |         7.175 |    10 |   6.7% |  55.1% | YES
+   6 | gemm                 |         5.099 |   240 |   4.8% |  59.9% | YES
+   7 | other                |         3.739 |   500 |   3.5% |  63.4% | no
+   8 | other                |         3.195 |   240 |   3.0% |  66.4% | no
+   9 | other                |         2.836 |   240 |   2.7% |  69.0% | no
+  10 | other                |         2.314 |   240 |   2.2% |  71.2% | no
+  11 | other                |         2.259 |   240 |   2.1% |  73.3% | no
+  12 | other                |         2.151 |   240 |   2.0% |  75.3% | no
+  13 | other                |         2.151 |   240 |   2.0% |  77.3% | no
+  14 | other                |         1.925 |   120 |   1.8% |  79.1% | no
+  15 | other                |         1.871 |   250 |   1.8% |  80.9% | no
+  16 | other                |         1.867 |   250 |   1.7% |  82.6% | no
+  17 | other                |         1.657 |   120 |   1.6% |  84.2% | no
+  18 | other                |         1.657 |   120 |   1.6% |  85.7% | no
+  19 | fused_mlp            |         1.437 |   120 |   1.3% |  87.1% | YES
+  20 | fused_mlp            |         1.437 |   120 |   1.3% |  88.4% | YES
+  ... (14 more kernels, 11.6% of total)
+
+============================================================
+  OPTIMIZATION PLAN
+============================================================
+  AutoKernel can optimize 63.8% of GPU time (4 kernel types).
+  Top-5 kernels account for 55.1% of total GPU time.
+  Estimated max speedup: 1.7x (Amdahl's law, f=64% supported, 3x per-kernel)
+
+Profile saved to /home/hieuvt/vla-opt-kernel/workspace/profile_report.json

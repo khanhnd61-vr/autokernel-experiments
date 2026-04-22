@@ -1,0 +1,2 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	kept	gemm	50.6010			1.000	PASS		gemm_3 rewritten: swizzled-HGEMM + torch.matmul fallback for K=2048 shape; 50.6 TFLOPS (0.96x pytorch); Triton ~20% slower than cuBLAS HGEMM on this shape.

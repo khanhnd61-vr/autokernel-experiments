@@ -1,0 +1,35 @@
+{
+  "model": "LlamaModel",
+  "input_shape": "1,1024",
+  "dtype": "float16",
+  "gpu": "Tesla V100S-PCIE-32GB",
+  "reference": {
+    "output_shape": "[1, 1024, 32000]",
+    "latency_ms": 24.22
+  },
+  "optimized": {
+    "output_shape": "[1, 1024, 32000]",
+    "latency_ms": 25.16,
+    "kernels_replaced": [
+      {
+        "type": "flash_attention",
+        "rank": 1,
+        "speedup": 1.578,
+        "path": "/home/hieuvt/vla-opt-kernel/workspace/kernel_flash_attention_1_optimized.py"
+      }
+    ]
+  },
+  "verification": {
+    "correctness": "PASS",
+    "max_abs_error": 6.937980651855469e-05,
+    "mean_abs_error": 2.743719505815534e-06,
+    "has_nan": false,
+    "has_inf": false
+  },
+  "summary": {
+    "original_latency_ms": 24.22,
+    "optimized_latency_ms": 25.16,
+    "end_to_end_speedup": 0.962,
+    "kernels_replaced": 1
+  }
+}

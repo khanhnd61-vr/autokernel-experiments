@@ -1,0 +1,72 @@
+{
+    "kernels_to_optimize": [
+        {
+            "rank": 1,
+            "file": "workspace/kernel_flash_attention_1.py",
+            "op_type": "flash_attention",
+            "model_shape": {
+                "batch": 1,
+                "heads": 12,
+                "seq_len": 1024,
+                "head_dim": 64
+            },
+            "gpu_time_ms": 18.802,
+            "pct_total": 17.6,
+            "estimated_speedup_potential": "2-4x"
+        },
+        {
+            "rank": 2,
+            "file": "workspace/kernel_gemm_2.py",
+            "op_type": "gemm",
+            "model_shape": {
+                "M": 1024,
+                "N": 2048,
+                "K": 768
+            },
+            "gpu_time_ms": 14.529,
+            "pct_total": 13.6,
+            "estimated_speedup_potential": "2-3x"
+        },
+        {
+            "rank": 3,
+            "file": "workspace/kernel_gemm_3.py",
+            "op_type": "gemm",
+            "model_shape": {
+                "M": 1024,
+                "N": 768,
+                "K": 2048
+            },
+            "gpu_time_ms": 10.061,
+            "pct_total": 9.4,
+            "estimated_speedup_potential": "2-3x"
+        },
+        {
+            "rank": 4,
+            "file": "workspace/kernel_gemm_4.py",
+            "op_type": "gemm",
+            "model_shape": {
+                "M": 1024,
+                "N": 768,
+                "K": 768
+            },
+            "gpu_time_ms": 8.237,
+            "pct_total": 7.7,
+            "estimated_speedup_potential": "2-3x"
+        },
+        {
+            "rank": 5,
+            "file": "workspace/kernel_gemm_5.py",
+            "op_type": "gemm",
+            "model_shape": {
+                "M": 1024,
+                "N": 32000,
+                "K": 768
+            },
+            "gpu_time_ms": 7.175,
+            "pct_total": 6.7,
+            "estimated_speedup_potential": "2-3x"
+        }
+    ],
+    "total_optimization_targets": 5,
+    "covered_gpu_time_pct": 55.0
+}

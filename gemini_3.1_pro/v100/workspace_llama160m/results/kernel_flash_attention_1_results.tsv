@@ -1,0 +1,5 @@
+experiment	tag	kernel_type	throughput_tflops	latency_us	pct_peak	speedup_vs_pytorch	correctness	peak_vram_mb	description
+1	kept	flash_attention	4.8950			1.000	PASS		baseline (correctness fix over broken extract, fp32 dots, no TC)
+2	kept	flash_attention	7.7080			1.575	PASS		exp4: BM=32 BN=64 NW=4 NS=1; bf16->fp32 upcast in wrapper; force stdlib profile load; 18/18 shape_sweep PASS; 0.930x vs pytorch (up from 0.591x)
+3	kept	flash_attention	7.7250			1.578	PASS		exp7 FINAL: fp32 flash-attention plateaued at 47% of peak fp32 (16.35 TFLOPS), 0.93x pytorch. FP16 TC unsalvageable on V100 (softmax-probs cast to fp16 truncates subnormals). Proceeding to gemm_2.
+4	kept	flash_attention	19.2560			3.934	PASS		fp16 HMMA on QK^T (pre-transposed K load fixes SM70 layout bug); P@V fp32; +2.5x over fp32 path, 2.37x pytorch, all correctness PASS
